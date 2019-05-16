@@ -1,0 +1,9 @@
+/*
+Overrides the default Mendix input styles
+Despite the warning on the width property, it 
+is required to fit all 3 boxes on the same line
+*/
+.form-group .time-input {
+    display: inline;
+    width: auto;
+}

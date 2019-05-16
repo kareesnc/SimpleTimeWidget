@@ -1,2 +1,17 @@
-# SimpleTimeWidget
-The new version of the time widget, for Mendix 8
+## SimpleTimeWidget
+[Simple entry for time portion of date/time objects.]
+
+## Features
+[feature highlights]
+
+## Usage
+[step by step instructions]
+
+## Demo project
+[link to sandbox]
+
+## Issues, suggestions and feature requests
+[link to GitHub issues]
+
+## Development and contribution
+[specify contribute]
