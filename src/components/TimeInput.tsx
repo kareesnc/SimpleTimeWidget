@@ -87,7 +87,7 @@ export class TimeInput extends Component<InputProps> {
             // when you call onUpdate but have no change in value, any text input changes are reversed
             // this is especially noticeable when trying to delete the 2nd character in the minutes field
             // (value is going from empty to empty, and the 2nd character becomes undeletable)
-            this.props.onUpdate(Moment().toDate());
+            this.props.onUpdate(new Date());
             this.props.onUpdate(newTime);
         }
     }
