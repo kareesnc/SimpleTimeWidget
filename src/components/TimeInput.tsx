@@ -22,8 +22,6 @@ export class TimeInput extends Component<InputProps> {
     private ampmValue = "";
 
     render(): ReactNode {
-        // may need to set Chrome console to verbose to see these log messages
-        console.log("rendered value "+this.props.value);
         if(this.props.value!=null && this.props.value!=undefined){
             var momentValue = Moment(this.props.value);
             this.lastKnownDate = momentValue.format("YYYY-MM-DD");
