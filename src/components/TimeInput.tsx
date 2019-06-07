@@ -24,24 +24,6 @@ export class TimeInput extends Component<InputProps> {
     render(): ReactNode {
         // may need to set Chrome console to verbose to see these log messages
         console.log("rendered value "+this.props.value);
-        this.setValues();
-        var hourInput = this.renderHours();
-        var minuteInput = this.renderMinutes();
-        var ampmInput = this.renderAMPM();
-        return <div 
-                className={this.props.className}
-                style={this.props.style}
-                tabIndex={this.props.tabIndex}
-                >
-                    {hourInput}
-                    <span> : </span>
-                    {minuteInput}
-                    <span> </span>
-                    {ampmInput}
-                </div>; 
-    }
-
-    private setValues() {
         if(this.props.value!=null && this.props.value!=undefined){
             var momentValue = Moment(this.props.value);
             this.lastKnownDate = momentValue.format("YYYY-MM-DD");
@@ -49,19 +31,12 @@ export class TimeInput extends Component<InputProps> {
             this.minuteValue = momentValue.format("mm");
             this.ampmValue = momentValue.format("A");
         }
-    }
-    private renderHours(): ReactNode {
-        if(this.hourValue=="") {
-            return <input type="text" 
-                          className={this.inputClass} 
-                          maxLength={this.inputLength} 
-                          size={this.inputLength} 
-                          onChange={this.handleChange}
-                          disabled={this.props.disabled}
-                          placeholder="HH" />
-        }
-        else {
-            return <input type="text" 
+        return <div 
+                className={this.props.className}
+                style={this.props.style}
+                tabIndex={this.props.tabIndex}
+                >
+                    <input type="text" 
                           className={this.inputClass} 
                           maxLength={this.inputLength} 
                           size={this.inputLength} 
@@ -69,20 +44,8 @@ export class TimeInput extends Component<InputProps> {
                           disabled={this.props.disabled}
                           value={this.hourValue}
                           placeholder="HH" />
-        }
-    }
-    private renderMinutes(): ReactNode {
-        if(this.minuteValue=="") {
-            return <input type="text" 
-                          className={this.inputClass} 
-                          maxLength={this.inputLength} 
-                          size={this.inputLength} 
-                          onChange={this.handleChange}
-                          disabled={this.props.disabled}
-                          placeholder="MM" />
-        }
-        else {
-            return <input type="text" 
+                    <span> : </span>
+                    <input type="text" 
                           className={this.inputClass} 
                           maxLength={this.inputLength} 
                           size={this.inputLength} 
@@ -90,36 +53,16 @@ export class TimeInput extends Component<InputProps> {
                           disabled={this.props.disabled}
                           value={this.minuteValue}
                           placeholder="MM" />
-        }
-    }
-    private renderAMPM(): ReactNode {
-        if(this.ampmValue=="AM") {
-            return <select className={this.inputClass} 
+                    <span> </span>
+                    <select className={this.inputClass} 
                            onChange={this.handleDropdownChange}
-                           disabled={this.props.disabled}>
-                        <option value=""></option>
-                        <option value="AM" selected>AM</option>
-                        <option value="PM">PM</option>
-                   </select>
-        }
-        else if(this.ampmValue=="PM") {
-            return <select className={this.inputClass} 
-                           onChange={this.handleDropdownChange}
-                           disabled={this.props.disabled}>
-                        <option value=""></option>
-                        <option value="AM">AM</option>
-                        <option value="PM" selected>PM</option>
-                   </select>
-        }
-        else {
-            return <select className={this.inputClass} 
-                           onChange={this.handleDropdownChange}
-                           disabled={this.props.disabled}>
+                           disabled={this.props.disabled}
+                           value={this.ampmValue}>
                         <option value=""></option>
                         <option value="AM">AM</option>
                         <option value="PM">PM</option>
                    </select>
-        }
+                </div>; 
     }
 
     private onChange(event: ChangeEvent<HTMLInputElement>) {
@@ -160,18 +103,11 @@ export class TimeInput extends Component<InputProps> {
         else{
             var newTime = Moment(this.props.value);
         }
-        if(this.hourValue=="" || this.minuteValue=="" || this.ampmValue=="") {
-            return undefined;
-        }
         var hoursInt = parseInt(this.hourValue);
-        if(isNaN(hoursInt) || hoursInt<1 || hoursInt>12) {
-            return undefined;
-        }
         var minutesInt = parseInt(this.minuteValue);
-        if(isNaN(minutesInt) || this.minuteValue.length<2 || minutesInt<0 || minutesInt>59) {
-            return undefined;
-        }
-        if(this.ampmValue!="AM" && this.ampmValue!="PM") {
+        if(this.hourValue=="" || this.minuteValue=="" || (this.ampmValue!="AM" && this.ampmValue!="PM") 
+            || isNaN(hoursInt) || hoursInt<1 || hoursInt>12 
+            || isNaN(minutesInt) || this.minuteValue.length<2 || minutesInt<0 || minutesInt>59 ) {
             return undefined;
         }
         if(this.ampmValue=="AM" && hoursInt==12){
