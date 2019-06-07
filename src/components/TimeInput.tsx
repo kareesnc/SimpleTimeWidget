@@ -157,11 +157,11 @@ export class TimeInput extends Component<InputProps> {
             return undefined;
         }
         var hoursInt = parseInt(this.hourValue);
-        if(hoursInt==NaN || hoursInt<1 || hoursInt>12) {
+        if(isNaN(hoursInt) || hoursInt<1 || hoursInt>12) {
             return undefined;
         }
         var minutesInt = parseInt(this.minuteValue);
-        if(minutesInt==NaN || this.minuteValue.length<2 || minutesInt<0 || minutesInt>59) {
+        if(isNaN(minutesInt) || this.minuteValue.length<2 || minutesInt<0 || minutesInt>59) {
             return undefined;
         }
         if(this.ampmValue!="AM" && this.ampmValue!="PM") {
