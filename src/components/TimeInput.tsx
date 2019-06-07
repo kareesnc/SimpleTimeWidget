@@ -22,7 +22,8 @@ export class TimeInput extends Component<InputProps> {
     private ampmValue = "";
 
     render(): ReactNode {
-        //alert("this.props.value "+this.props.value);
+        // may need to set Chrome console to verbose to see these log messages
+        console.log("rendered value "+this.props.value);
         this.setValues();
         var hourInput = this.renderHours();
         var minuteInput = this.renderMinutes();
@@ -144,8 +145,9 @@ export class TimeInput extends Component<InputProps> {
             this.props.onUpdate(this.makeTime());
         }
     }
-    // converts the 3 input fields, plus the original date component into a time string
-    // returns the empty string ("") if one or more values are invalid
+    // converts the 3 input fields, plus the original date component into a Date object
+    // returns undefined if one of the date components is empty or invalid
+    // attempts to use the last known date portion of the date/time object
     private makeTime(): Date | undefined {
         if(this.props.value==null || this.props.value==undefined){
             var newTime = Moment(this.lastKnownDate);
