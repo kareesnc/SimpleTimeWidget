@@ -9,7 +9,6 @@ class SimpleTimeWidget extends Component<SimpleTimeWidgetContainerProps> {
     private readonly onUpdateHandle = this.onUpdate.bind(this);
 
     render(): ReactNode {
-        //alert("this.props.timeAttribute.value "+this.props.timeAttribute.value);
         return <TimeInput 
                     value={this.props.timeAttribute.value} 
                     style={this.props.style}
@@ -20,12 +19,6 @@ class SimpleTimeWidget extends Component<SimpleTimeWidgetContainerProps> {
                 />;
     }
 
-    /*
-    So as far as I can tell, the current problem occurrs when going from an invalid time state to another invalid time state. 
-    Ex: one 0 in minutes to no digits in minutes ; anything invalid in hours to trying to change something in minutes
-    This doesn't happen when the time value is originally empty, but setting the value to null/undefined didn't help
-    In one test, it appeared that the renders aren't getting called natually in this state?
-    */
     private onUpdate(value: Date) {
         this.props.timeAttribute.setValue(value);
     }

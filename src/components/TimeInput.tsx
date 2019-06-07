@@ -141,8 +141,13 @@ export class TimeInput extends Component<InputProps> {
         this.hourValue = textBoxes[0].value;
         this.minuteValue = textBoxes[1].value;
         this.ampmValue = selects[0].value;
+        var newTime = this.makeTime();
         if (this.props.onUpdate) { 
-            this.props.onUpdate(this.makeTime());
+            // when you call onUpdate but have no change in value, any text input changes are reversed
+            // this is especially noticeable when trying to delete the 2nd character in the minutes field
+            // (value is going from empty to empty, and the 2nd character becomes undeletable)
+            this.props.onUpdate(Moment().toDate());
+            this.props.onUpdate(newTime);
         }
     }
     // converts the 3 input fields, plus the original date component into a Date object
