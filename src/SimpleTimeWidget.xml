@@ -24,10 +24,6 @@
                     <enumerationValue key="never">Never</enumerationValue>
                 </enumerationValues>
             </property>
-            <property key="onChangeAction" type="action" required="false">
-                <caption>OnChange action</caption>
-                <description/>
-            </property>
         </propertyGroup>
     </properties>
 </widget>
