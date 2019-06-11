@@ -1,5 +1,6 @@
-import { Component, ReactNode, createElement } from "react";
+import { Component, ReactNode, Fragment, createElement } from "react";
 import { TimeInput } from "./components/TimeInput";
+import { Alert } from "./components/Alert";
 import { hot } from "react-hot-loader/root";
 import { SimpleTimeWidgetContainerProps } from "../typings/SimpleTimeWidgetProps";
 
@@ -9,14 +10,17 @@ class SimpleTimeWidget extends Component<SimpleTimeWidgetContainerProps> {
     private readonly onUpdateHandle = this.onUpdate.bind(this);
 
     render(): ReactNode {
-        return <TimeInput 
-                    value={this.props.timeAttribute.value} 
-                    style={this.props.style}
-                    className={this.props.class}
-                    tabIndex={this.props.tabIndex}
-                    onUpdate={this.onUpdateHandle}
-                    disabled={this.isReadOnly()}
-                />;
+        return <Fragment>
+                    <TimeInput 
+                        value={this.props.timeAttribute.value} 
+                        style={this.props.style}
+                        className={this.props.class}
+                        tabIndex={this.props.tabIndex}
+                        onUpdate={this.onUpdateHandle}
+                        disabled={this.isReadOnly()}
+                    />
+                    <Alert>{this.props.timeAttribute.validation}</Alert>
+                </Fragment>;
     }
 
     private onUpdate(value: Date) {
