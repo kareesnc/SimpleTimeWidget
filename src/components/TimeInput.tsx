@@ -77,6 +77,9 @@ export class TimeInput extends Component<InputProps> {
         }
     }
     private sharedChangeHandler(inputContainer: HTMLElement){
+        if(this.props.disabled){
+            return; // prevent a simple console trick from allowing input
+        }
         var textBoxes = inputContainer.getElementsByTagName("input");
         var selects = inputContainer.getElementsByTagName("select");
         this.hourValue = textBoxes[0].value;
