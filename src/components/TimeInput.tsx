@@ -120,22 +120,17 @@ export class TimeInput extends Component<InputProps> {
             return;
         }
         const newTime = this.makeTime();
-        console.log(this.state); // TODO: remove console logs
-        console.log(this.props.value); // TODO: remove console logs
-        console.log(newTime); // TODO: remove console logs
-        if(newTime){
-            if(!this.props.value || (this.props.value.getTime() !== newTime.getTime())){
-                console.log("yes change"); // TODO: remove console logs
+        // if new time is undefined, the time was invalid
+        if(newTime){ 
+            // if value is undefined but new time is not, the value used to be empty but is now set
+            if(!this.props.value || this.props.value.getTime() !== newTime.getTime()){
                 if (this.props.onUpdate) {
                     this.props.onUpdate(newTime);
                 }
             }
-            else{
-                console.log("no change"); // TODO: remove console logs
-            }
         }
-        else{
-            console.log("undefined"); // TODO: remove console logs
+        else {
+            // TODO: show validation feedback?
         }
     }
     // converts the 3 input fields, plus the original date component into a Date object
@@ -145,6 +140,7 @@ export class TimeInput extends Component<InputProps> {
             var newTime = Moment(this.props.value);
         }
         else {
+            // if the date portion is not set, set to epoch - Mendix's default time input also sets epoch in this case
             var newTime = Moment("1970-01-01");
         }
         if(this.state.hourValue && this.state.minuteValue && this.state.ampmValue){
