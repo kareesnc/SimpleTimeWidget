@@ -5,9 +5,9 @@
         xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/@mendix/pluggable-widgets-api/widget.xsd">
     <name>Simple Time Widget</name>
     <description>Simple entry for time portion of date/time objects.</description>
-    <icon/>
+    <icon>iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAABm0lEQVRo3u2ayw7EIAhFew3//8vOahJngnJRqqSpq66Qw0uUotZ6RS8AQ6G1VoTvGQFiKW6tCLBpkFXlo6HcIAyAJRNAOJALpAcxkgFgGswDQ4NoEB4FmX00IBZGVkKJsbbD28P9LaAy44U7SrYl38rNMhtK328mcVlvaPJZGGGtdGJ5jCUrZ0QUoLdyavlSLIhT3hjpoBm6ZIdgYcr1kFVG7gIQUpUiqpqmR6uzMNVCK4+7ANgqJlHlb2d+dHut1kWRVvf2Wguy8bxkf0GSLFzXVTfF8a1V7Q2tbEuYAyhNHgzOM8mgRER7L5k9QHTAezyy0zDPqVrttTFDy/72Wi9IRhArT05deQdX3J/8MMtvluRnrtriuSufOgD/3w66V93eS0r2XqtNiWdWrf831UwH5MgbqkcywlgQ3dBix11RZdkjp6ebeCxy+qVx6mTXyFvBkXDai6Z3MApiMlsZJVa9aVnfCndhY3JmPO31ysp4ujg2wu5k9/wwIE6roTdHmQm3lVBy58hs7iyE2J6fau6AOvqb02KlC28XPoCXMYaNBNHlAAAAAElFTkSuQmCC</icon>
     <properties>
-        <propertyGroup caption="Data source">
+        <propertyGroup caption="General">
             <systemProperty key="Label" />
             <property key="timeAttribute" type="attribute">
                 <caption>Date/time attribute</caption>
