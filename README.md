@@ -23,9 +23,9 @@ Property descriptions:
     This message does NOT prevent saving, executing microflows, etc. 
     While this message is present, the attribute will be the last valid value.  
 * Required
-  * When yes, causes Mendix validation to fail when the date attribute is empty  
+  * When yes, causes Mendix validation to fail when the date attribute is empty.  
 * Required message
-  * The error message to show when the required validation fails  
+  * The error message to show when the required validation fails.  
 * Show clear button
   * Adds a button that will clear the inputs and set the attribute to empty.
     Warning: this will clear the date portion of the date/time attribute as well.  
