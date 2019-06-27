@@ -50,14 +50,14 @@ export class TimeInput extends Component<InputProps> {
                 this.setState({ 
                     hourValue: hourValue, 
                     minuteValue: minuteValue, 
-                    ampmValue: ampmValue, 
+                    ampmValue: ampmValue 
                 });
             }
             else{
                 this.setState({ 
                     hourValue: undefined, 
                     minuteValue: undefined, 
-                    ampmValue: undefined, 
+                    ampmValue: undefined 
                 });
             }
             this.setState({ 
@@ -131,6 +131,13 @@ export class TimeInput extends Component<InputProps> {
         return undefined;
     }
     private clearValue() {
+        this.setState({ 
+            hourValue: undefined, 
+            minuteValue: undefined, 
+            ampmValue: undefined, 
+            validationString: undefined,
+            wrapperClassName: classNames(this.defaultWrapperClass)
+        });
         if (this.props.onUpdate) {
             this.props.onUpdate(undefined);
         }
