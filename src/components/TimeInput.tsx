@@ -123,8 +123,8 @@ export class TimeInput extends Component<InputProps> {
         console.log(this.state); // TODO: remove console logs
         console.log(this.props.value); // TODO: remove console logs
         console.log(newTime); // TODO: remove console logs
-        if(this.props.value && newTime){
-            if(this.props.value.getTime() !== newTime.getTime()){
+        if(newTime){
+            if(!this.props.value || (this.props.value.getTime() !== newTime.getTime())){
                 console.log("yes change"); // TODO: remove console logs
                 if (this.props.onUpdate) {
                     this.props.onUpdate(newTime);
@@ -141,7 +141,12 @@ export class TimeInput extends Component<InputProps> {
     // converts the 3 input fields, plus the original date component into a Date object
     // returns undefined if one of the date components is empty or invalid
     private makeTime(): Date | undefined {
-        var newTime = Moment(this.props.value);
+        if(this.props.value != undefined) {
+            var newTime = Moment(this.props.value);
+        }
+        else {
+            var newTime = Moment("1970-01-01");
+        }
         if(this.state.hourValue && this.state.minuteValue && this.state.ampmValue){
             var hoursInt = parseInt(this.state.hourValue);
             var minutesInt = parseInt(this.state.minuteValue);
