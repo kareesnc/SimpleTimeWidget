@@ -1,15 +1,13 @@
 import { Component, createElement, ReactNode } from "react";
 import { SimpleTimeWidgetPreviewProps, VisibilityMap } from "../typings/SimpleTimeWidgetProps";
 import { TimeInput } from "./components/TimeInput";
-import Moment from "moment";
 
 declare function require(name: string): string;
 
 // eslint-disable-next-line @typescript-eslint/class-name-casing
 export class preview extends Component<SimpleTimeWidgetPreviewProps> {
     render(): ReactNode {
-        const value = `[${this.props.timeAttribute}]`;
-        return <TimeInput value={Moment(value).toDate()} disabled={this.props.editable === "never"} />;
+        return <TimeInput value={undefined} disabled={this.props.editable === "never"} />;
     }
 }
 
