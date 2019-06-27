@@ -46,6 +46,14 @@
                     <translation lang="en_US">Time is required</translation>
                 </translations>
             </property>
+            <property key="showClear" type="enumeration" defaultValue="no">
+                <caption>Clear button</caption>
+                <description/>
+                <enumerationValues>
+                    <enumerationValue key="yes">Yes</enumerationValue>
+                    <enumerationValue key="no">No</enumerationValue>
+                </enumerationValues>
+            </property>
             <property key="onChangeAction" type="action" required="false">
                 <caption>OnChange action</caption>
                 <description/>

@@ -14,6 +14,7 @@ export interface InputProps {
     required?: boolean;
     hasError?: boolean;
     invalidMessage?: string;
+    showClear?: boolean;
 }
 interface InputState {
     hourValue?: string;
@@ -28,32 +29,45 @@ export class TimeInput extends Component<InputProps> {
     private readonly handleMinuteChange = this.onMinuteChange.bind(this);
     private readonly handleBlur = this.onBlur.bind(this);
     private readonly handleDropdownChange = this.onDropdownChange.bind(this);
+    private readonly handleClearButton = this.clearValue.bind(this);
+    private readonly defaultWrapperClass = classNames("time-input",this.props.className);
     private readonly inputLength = 2;
     readonly state: InputState = { 
         hourValue: undefined, 
         minuteValue: undefined, 
         ampmValue: undefined,
         validationString: undefined,
-        wrapperClassName: classNames(this.props.className)
+        wrapperClassName: classNames(this.defaultWrapperClass)
     };
     componentDidUpdate(prevProps: InputProps) {
         if (this.props.value !== prevProps.value) {
-            const momentValue = Moment(this.props.value);
-            const hourValue = momentValue.format("h");
-            const minuteValue = momentValue.format("mm");
-            const ampmValue = momentValue.format("A");
+            if(this.props.value != undefined){
+                const momentValue = Moment(this.props.value);
+                const hourValue = momentValue.format("h");
+                const minuteValue = momentValue.format("mm");
+                const ampmValue = momentValue.format("A");
+                this.setState({ 
+                    hourValue: hourValue, 
+                    minuteValue: minuteValue, 
+                    ampmValue: ampmValue, 
+                });
+            }
+            else{
+                this.setState({ 
+                    hourValue: undefined, 
+                    minuteValue: undefined, 
+                    ampmValue: undefined, 
+                });
+            }
             this.setState({ 
-                hourValue: hourValue, 
-                minuteValue: minuteValue, 
-                ampmValue: ampmValue, 
                 validationString: undefined,
-                wrapperClassName: classNames(this.props.className)
+                wrapperClassName: classNames(this.defaultWrapperClass)
             });
         }
     }
 
     render(): ReactNode {
-        const inputClassName = classNames("form-control", "time-input");
+        const inputClassName = classNames("form-control");
         const labelledby = `${this.props.id}-label`
             + (this.props.hasError ? ` ${this.props.id}-error` : "");
         return <div 
@@ -94,8 +108,26 @@ export class TimeInput extends Component<InputProps> {
                         <option value="AM">AM</option>
                         <option value="PM">PM</option>
                    </select>
+                   <span> </span>
+                   {this.clearButton()}
                    <Alert>{this.state.validationString}</Alert>
                 </div>; 
+    }
+
+    private clearButton(): ReactNode | undefined {
+        if(this.props.showClear){
+            return <button type="button"
+                           className="btn time-button"
+                           onClick={this.handleClearButton}
+                           disabled={this.props.disabled}>
+                    Clear</button>;
+        }
+        return undefined;
+    }
+    private clearValue() {
+        if (this.props.onUpdate) {
+            this.props.onUpdate(undefined);
+        }
     }
 
     private onHourChange(event: ChangeEvent<HTMLInputElement>) {
@@ -154,7 +186,7 @@ export class TimeInput extends Component<InputProps> {
         else {
             this.setState({ 
                 validationString: this.props.invalidMessage,
-                wrapperClassName: classNames("has-error", this.props.className)
+                wrapperClassName: classNames("has-error", this.defaultWrapperClass)
             });
         }
     }

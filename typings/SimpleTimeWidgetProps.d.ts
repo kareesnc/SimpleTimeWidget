@@ -18,12 +18,15 @@ export type EditableEnum = "default" | "never";
 
 export type RequiredEnum = "yes" | "no";
 
+export type ShowClearEnum = "yes" | "no";
+
 export interface SimpleTimeWidgetContainerProps extends CommonProps {
     timeAttribute: EditableValue<Date>;
     editable: EditableEnum;
     invalidMessage: DynamicValue<string>;
     required: RequiredEnum;
     requiredMessage?: DynamicValue<string>;
+    showClear: ShowClearEnum;
     onChangeAction?: ActionValue;
 }
 
@@ -33,6 +36,7 @@ export interface SimpleTimeWidgetPreviewProps extends CommonProps {
     invalidMessage: string;
     required: RequiredEnum;
     requiredMessage?: string;
+    showClear: ShowClearEnum;
     onChangeAction?: pages.ClientAction;
 }
 
@@ -42,5 +46,6 @@ export interface VisibilityMap {
     invalidMessage: boolean;
     required: boolean;
     requiredMessage: boolean;
+    showClear: boolean;
     onChangeAction: boolean;
 }

@@ -3,7 +3,10 @@ Overrides the default Mendix input styles
 Despite the warning on the width property, it 
 is required to fit all 3 boxes on the same line
 */
-.form-group .time-input {
+.time-input input, .time-input select {
     display: inline;
     width: auto;
+}
+.time-input .time-button {
+    vertical-align: top;
 }

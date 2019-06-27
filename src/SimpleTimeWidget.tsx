@@ -26,7 +26,8 @@ class SimpleTimeWidget extends Component<SimpleTimeWidgetContainerProps> {
                         disabled={this.isReadOnly()}
                         required={required}
                         hasError={!!validationFeedback}
-                        invalidMessage={this.props.invalidMessage ? this.props.invalidMessage.value : "Invalid time"}
+                        invalidMessage={this.invalidMessage()}
+                        showClear={this.showClear()}
                     />
                     <Alert id={this.props.id + "-error"}>{validationFeedback}</Alert>
                 </Fragment>;
@@ -41,6 +42,12 @@ class SimpleTimeWidget extends Component<SimpleTimeWidgetContainerProps> {
     }
     private isReadOnly(): boolean {
         return this.props.editable === "never" || this.props.timeAttribute.readOnly;
+    }
+    private invalidMessage(): string | undefined {
+        return this.props.invalidMessage ? this.props.invalidMessage.value : "Invalid time";
+    }
+    private showClear(): boolean {
+        return this.props.showClear === "yes";
     }
     private validator(value: Date | undefined): string | undefined {
         const { required, requiredMessage } = this.props;
