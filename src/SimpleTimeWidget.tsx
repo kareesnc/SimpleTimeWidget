@@ -13,17 +13,22 @@ class SimpleTimeWidget extends Component<SimpleTimeWidgetContainerProps> {
     }
 
     render(): ReactNode {
+        const validationFeedback = this.props.timeAttribute.validation;
+        const required = !!(this.props.requiredMessage && this.props.requiredMessage.value);
         return <Fragment>
                     <TimeInput 
+                        id={this.props.id}
                         value={this.props.timeAttribute.value} 
                         style={this.props.style}
                         className={this.props.class}
                         tabIndex={this.props.tabIndex}
                         onUpdate={this.onUpdateHandle}
                         disabled={this.isReadOnly()}
+                        required={required}
+                        hasError={!!validationFeedback}
                         invalidMessage={this.props.invalidMessage ? this.props.invalidMessage.value : "Invalid time"}
                     />
-                    <Alert>{this.props.timeAttribute.validation}</Alert>
+                    <Alert id={this.props.id + "-error"}>{validationFeedback}</Alert>
                 </Fragment>;
     }
 

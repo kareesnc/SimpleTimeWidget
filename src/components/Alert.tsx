@@ -1,12 +1,13 @@
 import { FunctionComponent, createElement } from "react";
 import classNames from "classnames";
 export interface AlertProps {
+    id?: string;
     alertStyle?: "default" | "primary" | "success" | "info" | "warning" | "danger";
     className?: string;
 }
-export const Alert: FunctionComponent<AlertProps> = ({ alertStyle, className, children }) =>
+export const Alert: FunctionComponent<AlertProps> = ({ alertStyle, className, children, id }) =>
     children
-        ? <div className={classNames(`alert alert-${alertStyle}`, className) }>{children}</div>
+        ? <div id={id} className={classNames(`alert alert-${alertStyle}`, className) }>{children}</div>
         : null;
 Alert.displayName = "Alert";
 Alert.defaultProps = { alertStyle: "danger" };

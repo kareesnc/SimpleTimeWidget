@@ -4,12 +4,15 @@ import classNames from "classnames";
 import { Alert } from "../components/Alert";
 
 export interface InputProps {
+    id?: string;
     value: Date | undefined;
     className?: string;
     style?: CSSProperties;
     tabIndex?: number;
     onUpdate?: (value: Date | undefined) => void;
     disabled?: boolean;
+    required?: boolean;
+    hasError?: boolean;
     invalidMessage?: string;
 }
 interface InputState {
@@ -51,10 +54,16 @@ export class TimeInput extends Component<InputProps> {
 
     render(): ReactNode {
         const inputClassName = classNames("form-control", "time-input");
+        const labelledby = `${this.props.id}-label`
+            + (this.props.hasError ? ` ${this.props.id}-error` : "");
         return <div 
+                id={this.props.id}
                 className={this.state.wrapperClassName}
                 style={this.props.style}
                 tabIndex={this.props.tabIndex}
+                aria-labelledby={labelledby}
+                aria-invalid={this.props.hasError}
+                aria-required={this.props.required}
                 >
                     <input type="text" 
                           className={inputClassName} 
