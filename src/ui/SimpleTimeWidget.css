@@ -7,6 +7,9 @@ is required to fit all 3 boxes on the same line
     display: inline;
     width: auto;
 }
+.time-input input[type="number"] {
+    max-width: 70px;
+}
 .time-input .time-button {
     vertical-align: top;
 }

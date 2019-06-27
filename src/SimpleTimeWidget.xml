@@ -25,7 +25,7 @@
                 </enumerationValues>
             </property>
             <property key="invalidMessage" type="textTemplate" required="true">
-                <caption>Invalid message</caption>
+                <caption>Invalid time message</caption>
                 <description/>
                 <translations>
                     <translation lang="en_US">Invalid time</translation>
@@ -47,7 +47,15 @@
                 </translations>
             </property>
             <property key="showClear" type="enumeration" defaultValue="no">
-                <caption>Clear button</caption>
+                <caption>Show clear button</caption>
+                <description/>
+                <enumerationValues>
+                    <enumerationValue key="yes">Yes</enumerationValue>
+                    <enumerationValue key="no">No</enumerationValue>
+                </enumerationValues>
+            </property>
+            <property key="renderNumber" type="enumeration" defaultValue="no">
+                <caption>Use number inputs</caption>
                 <description/>
                 <enumerationValues>
                     <enumerationValue key="yes">Yes</enumerationValue>

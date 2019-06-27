@@ -15,6 +15,7 @@ export interface InputProps {
     hasError?: boolean;
     invalidMessage?: string;
     showClear?: boolean;
+    renderNumber?: boolean;
 }
 interface InputState {
     hourValue?: string;
@@ -67,7 +68,6 @@ export class TimeInput extends Component<InputProps> {
     }
 
     render(): ReactNode {
-        const inputClassName = classNames("form-control");
         const labelledby = `${this.props.id}-label`
             + (this.props.hasError ? ` ${this.props.id}-error` : "");
         return <div 
@@ -79,27 +79,11 @@ export class TimeInput extends Component<InputProps> {
                 aria-invalid={this.props.hasError}
                 aria-required={this.props.required}
                 >
-                    <input type="text" 
-                          className={inputClassName} 
-                          maxLength={this.inputLength} 
-                          size={this.inputLength} 
-                          onChange={this.handleHourChange}
-                          onBlur={this.handleBlur}
-                          disabled={this.props.disabled}
-                          value={this.getCurrentHourValue()}
-                          placeholder="HH" />
+                    {this.props.renderNumber ? this.renderNumberInput(true) : this.renderTextInput(true)}
                     <span> : </span>
-                    <input type="text" 
-                          className={inputClassName} 
-                          maxLength={this.inputLength} 
-                          size={this.inputLength} 
-                          onChange={this.handleMinuteChange}
-                          onBlur={this.handleBlur}
-                          disabled={this.props.disabled}
-                          value={this.getCurrentMinuteValue()}
-                          placeholder="MM" />
+                    {this.props.renderNumber ? this.renderNumberInput(false) : this.renderTextInput(false)}
                     <span> </span>
-                    <select className={inputClassName} 
+                    <select className="form-control" 
                            onChange={this.handleDropdownChange}
                            onBlur={this.handleBlur}
                            disabled={this.props.disabled}
@@ -109,12 +93,34 @@ export class TimeInput extends Component<InputProps> {
                         <option value="PM">PM</option>
                    </select>
                    <span> </span>
-                   {this.clearButton()}
+                   {this.renderClearButton()}
                    <Alert>{this.state.validationString}</Alert>
                 </div>; 
     }
 
-    private clearButton(): ReactNode | undefined {
+    private renderTextInput(isHours: boolean): ReactNode{
+        return <input type="text" 
+                    className="form-control" 
+                    maxLength={this.inputLength} 
+                    size={this.inputLength} 
+                    onChange={isHours ? this.handleHourChange : this.handleMinuteChange}
+                    onBlur={this.handleBlur}
+                    disabled={this.props.disabled}
+                    value={isHours ? this.getCurrentHourValue() : this.getCurrentMinuteValue()}
+                    placeholder={isHours ? "HH" : "MM"} />;
+    }
+    private renderNumberInput(isHours: boolean): ReactNode{
+        return <input type="number" 
+                    className={classNames("form-control","number-input")} 
+                    min={isHours ? 1 : 0} 
+                    max={isHours ? 12 : 59} 
+                    onChange={isHours ? this.handleHourChange : this.handleMinuteChange}
+                    onBlur={this.handleBlur}
+                    disabled={this.props.disabled}
+                    value={isHours ? this.getCurrentHourValue() : this.getCurrentMinuteValue()}
+                    placeholder={isHours ? "HH" : "MM"} />;
+    }
+    private renderClearButton(): ReactNode | undefined {
         if(this.props.showClear){
             return <button type="button"
                            className="btn time-button"
@@ -205,8 +211,7 @@ export class TimeInput extends Component<InputProps> {
             var minutesInt = parseInt(this.state.minuteValue);
             if(this.state.hourValue=="" || this.state.minuteValue=="" || 
                 (this.state.ampmValue!="AM" && this.state.ampmValue!="PM") 
-                || isNaN(hoursInt) || hoursInt<1 || hoursInt>12 
-                || isNaN(minutesInt) || this.state.minuteValue.length<2 
+                || isNaN(hoursInt) || hoursInt<1 || hoursInt>12 || isNaN(minutesInt) 
                 || minutesInt<0 || minutesInt>59 ) {
                 return undefined;
             }
