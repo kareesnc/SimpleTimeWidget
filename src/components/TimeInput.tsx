@@ -1,6 +1,7 @@
 import { Component, ReactNode, CSSProperties, ChangeEvent, createElement } from "react";
 import Moment from "moment";
 import classNames from "classnames";
+import { Alert } from "../components/Alert";
 
 export interface InputProps {
     value: Date | undefined;
@@ -9,11 +10,14 @@ export interface InputProps {
     tabIndex?: number;
     onUpdate?: (value: Date | undefined) => void;
     disabled?: boolean;
+    invalidMessage?: string;
 }
 interface InputState {
     hourValue?: string;
     minuteValue?: string;
     ampmValue?: string;
+    validationString?: string;
+    wrapperClassName: string;
 }
 
 export class TimeInput extends Component<InputProps> {
@@ -22,7 +26,13 @@ export class TimeInput extends Component<InputProps> {
     private readonly handleBlur = this.onBlur.bind(this);
     private readonly handleDropdownChange = this.onDropdownChange.bind(this);
     private readonly inputLength = 2;
-    readonly state: InputState = { hourValue: undefined, minuteValue: undefined, ampmValue: undefined };
+    readonly state: InputState = { 
+        hourValue: undefined, 
+        minuteValue: undefined, 
+        ampmValue: undefined,
+        validationString: undefined,
+        wrapperClassName: classNames(this.props.className)
+    };
     componentDidUpdate(prevProps: InputProps) {
         if (this.props.value !== prevProps.value) {
             const momentValue = Moment(this.props.value);
@@ -33,6 +43,8 @@ export class TimeInput extends Component<InputProps> {
                 hourValue: hourValue, 
                 minuteValue: minuteValue, 
                 ampmValue: ampmValue, 
+                validationString: undefined,
+                wrapperClassName: classNames(this.props.className)
             });
         }
     }
@@ -40,7 +52,7 @@ export class TimeInput extends Component<InputProps> {
     render(): ReactNode {
         const inputClassName = classNames("form-control", "time-input");
         return <div 
-                className={this.props.className}
+                className={this.state.wrapperClassName}
                 style={this.props.style}
                 tabIndex={this.props.tabIndex}
                 >
@@ -66,13 +78,14 @@ export class TimeInput extends Component<InputProps> {
                     <span> </span>
                     <select className={inputClassName} 
                            onChange={this.handleDropdownChange}
+                           onBlur={this.handleBlur}
                            disabled={this.props.disabled}
-                           value={this.getCurrentAMPMValue()}
-                           onBlur={this.handleBlur}>
+                           value={this.getCurrentAMPMValue()}>
                         <option value=""></option>
                         <option value="AM">AM</option>
                         <option value="PM">PM</option>
                    </select>
+                   <Alert>{this.state.validationString}</Alert>
                 </div>; 
     }
 
@@ -130,7 +143,10 @@ export class TimeInput extends Component<InputProps> {
             }
         }
         else {
-            // TODO: show validation feedback?
+            this.setState({ 
+                validationString: this.props.invalidMessage,
+                wrapperClassName: classNames("has-error", this.props.className)
+            });
         }
     }
     // converts the 3 input fields, plus the original date component into a Date object

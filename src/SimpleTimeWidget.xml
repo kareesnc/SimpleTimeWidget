@@ -24,6 +24,28 @@
                     <enumerationValue key="never">Never</enumerationValue>
                 </enumerationValues>
             </property>
+            <property key="invalidMessage" type="textTemplate" required="true">
+                <caption>Invalid message</caption>
+                <description/>
+                <translations>
+                    <translation lang="en_US">Invalid time</translation>
+                </translations>
+            </property>
+            <property key="required" type="enumeration" defaultValue="no">
+                <caption>Required</caption>
+                <description/>
+                <enumerationValues>
+                    <enumerationValue key="yes">Yes</enumerationValue>
+                    <enumerationValue key="no">No</enumerationValue>
+                </enumerationValues>
+            </property>
+            <property key="requiredMessage" type="textTemplate" required="false">
+                <caption>Required message</caption>
+                <description/>
+                <translations>
+                    <translation lang="en_US">Time is required</translation>
+                </translations>
+            </property>
             <property key="onChangeAction" type="action" required="false">
                 <caption>OnChange action</caption>
                 <description/>

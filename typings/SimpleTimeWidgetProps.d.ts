@@ -5,7 +5,7 @@
  */
 import { CSSProperties } from "react";
 import { pages } from "mendixmodelsdk";
-import { ActionValue, EditableValue } from "@mendix/pluggable-widgets-api/properties";
+import { ActionValue, DynamicValue, EditableValue } from "@mendix/pluggable-widgets-api/properties";
 
 interface CommonProps {
     id: string;
@@ -16,20 +16,31 @@ interface CommonProps {
 
 export type EditableEnum = "default" | "never";
 
+export type RequiredEnum = "yes" | "no";
+
 export interface SimpleTimeWidgetContainerProps extends CommonProps {
     timeAttribute: EditableValue<Date>;
     editable: EditableEnum;
+    invalidMessage: DynamicValue<string>;
+    required: RequiredEnum;
+    requiredMessage?: DynamicValue<string>;
     onChangeAction?: ActionValue;
 }
 
 export interface SimpleTimeWidgetPreviewProps extends CommonProps {
     timeAttribute: string;
     editable: EditableEnum;
+    invalidMessage: string;
+    required: RequiredEnum;
+    requiredMessage?: string;
     onChangeAction?: pages.ClientAction;
 }
 
 export interface VisibilityMap {
     timeAttribute: boolean;
     editable: boolean;
+    invalidMessage: boolean;
+    required: boolean;
+    requiredMessage: boolean;
     onChangeAction: boolean;
 }
