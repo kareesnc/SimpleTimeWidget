@@ -10,52 +10,65 @@ export interface InputProps {
     onUpdate?: (value: Date | undefined) => void;
     disabled?: boolean;
 }
+interface InputState {
+    hourValue?: string;
+    minuteValue?: string;
+    ampmValue?: string;
+}
 
 export class TimeInput extends Component<InputProps> {
-    private readonly handleChange = this.onChange.bind(this);
+    private readonly handleHourChange = this.onHourChange.bind(this);
+    private readonly handleMinuteChange = this.onMinuteChange.bind(this);
+    private readonly handleBlur = this.onBlur.bind(this);
     private readonly handleDropdownChange = this.onDropdownChange.bind(this);
-    private readonly inputClass = classNames("form-control","time-input");
     private readonly inputLength = 2;
-    private lastKnownDate = "1970-01-01";
-    private hourValue = "";
-    private minuteValue = "";
-    private ampmValue = "";
+    readonly state: InputState = { hourValue: undefined, minuteValue: undefined, ampmValue: undefined };
+    componentDidUpdate(prevProps: InputProps) {
+        if (this.props.value !== prevProps.value) {
+            const momentValue = Moment(this.props.value);
+            const hourValue = momentValue.format("h");
+            const minuteValue = momentValue.format("mm");
+            const ampmValue = momentValue.format("A");
+            this.setState({ 
+                hourValue: hourValue, 
+                minuteValue: minuteValue, 
+                ampmValue: ampmValue, 
+            });
+        }
+    }
 
     render(): ReactNode {
-        if(this.props.value!=null && this.props.value!=undefined){
-            var momentValue = Moment(this.props.value);
-            this.lastKnownDate = momentValue.format("YYYY-MM-DD");
-            this.hourValue = momentValue.format("h");
-            this.minuteValue = momentValue.format("mm");
-            this.ampmValue = momentValue.format("A");
-        }
+        const inputClassName = classNames("form-control", "time-input");
         return <div 
                 className={this.props.className}
                 style={this.props.style}
                 tabIndex={this.props.tabIndex}
                 >
                     <input type="text" 
-                          className={this.inputClass} 
+                          className={inputClassName} 
                           maxLength={this.inputLength} 
                           size={this.inputLength} 
-                          onChange={this.handleChange}
+                          onChange={this.handleHourChange}
+                          onBlur={this.handleBlur}
                           disabled={this.props.disabled}
-                          value={this.hourValue}
+                          value={this.getCurrentHourValue()}
                           placeholder="HH" />
                     <span> : </span>
                     <input type="text" 
-                          className={this.inputClass} 
+                          className={inputClassName} 
                           maxLength={this.inputLength} 
                           size={this.inputLength} 
-                          onChange={this.handleChange}
+                          onChange={this.handleMinuteChange}
+                          onBlur={this.handleBlur}
                           disabled={this.props.disabled}
-                          value={this.minuteValue}
+                          value={this.getCurrentMinuteValue()}
                           placeholder="MM" />
                     <span> </span>
-                    <select className={this.inputClass} 
+                    <select className={inputClassName} 
                            onChange={this.handleDropdownChange}
                            disabled={this.props.disabled}
-                           value={this.ampmValue}>
+                           value={this.getCurrentAMPMValue()}
+                           onBlur={this.handleBlur}>
                         <option value=""></option>
                         <option value="AM">AM</option>
                         <option value="PM">PM</option>
@@ -63,62 +76,94 @@ export class TimeInput extends Component<InputProps> {
                 </div>; 
     }
 
-    private onChange(event: ChangeEvent<HTMLInputElement>) {
-        var inputContainer = event.target.parentElement;
-        if(inputContainer) {
-            this.sharedChangeHandler(inputContainer);
-        }
+    private onHourChange(event: ChangeEvent<HTMLInputElement>) {
+        this.setState({ hourValue: event.target.value });
+    }
+    private onMinuteChange(event: ChangeEvent<HTMLInputElement>) {
+        this.setState({ minuteValue: event.target.value });
     }
     private onDropdownChange(event: ChangeEvent<HTMLSelectElement>) {
-        var inputContainer = event.target.parentElement;
-        event.target.options.selectedIndex
-        if(inputContainer) {
-            this.sharedChangeHandler(inputContainer);
-        }
+        this.setState({ ampmValue: event.target.value });
     }
-    private sharedChangeHandler(inputContainer: HTMLElement){
-        if(this.props.disabled){
-            return; // prevent a simple console trick from allowing input
+    private getCurrentHourValue() {
+        var nonStateVal = "";
+        if(this.props.value != undefined) {
+            nonStateVal = Moment(this.props.value).format("h")
         }
-        var textBoxes = inputContainer.getElementsByTagName("input");
-        var selects = inputContainer.getElementsByTagName("select");
-        this.hourValue = textBoxes[0].value;
-        this.minuteValue = textBoxes[1].value;
-        this.ampmValue = selects[0].value;
-        var newTime = this.makeTime();
-        if (this.props.onUpdate) { 
-            // when you call onUpdate but have no change in value, any text input changes are reversed
-            // this is especially noticeable when trying to delete the 2nd character in the minutes field
-            // (value is going from empty to empty, and the 2nd character becomes undeletable)
-            this.props.onUpdate(new Date());
-            this.props.onUpdate(newTime);
+        return this.state.hourValue !== undefined
+            ? this.state.hourValue
+            : nonStateVal;
+    }
+    private getCurrentMinuteValue() {
+        var nonStateVal = "";
+        if(this.props.value != undefined) {
+            nonStateVal = Moment(this.props.value).format("mm")
+        }
+        return this.state.minuteValue !== undefined
+            ? this.state.minuteValue
+            : nonStateVal;
+    }
+    private getCurrentAMPMValue() {
+        var nonStateVal = "";
+        if(this.props.value != undefined) {
+            nonStateVal = Moment(this.props.value).format("A")
+        }
+        return this.state.ampmValue !== undefined
+            ? this.state.ampmValue
+            : nonStateVal;
+    }
+
+    // detects whether a change has occurred and, if it has, passes that change up
+    // the change will not be passed if the input is disabled, or if the time is invalid
+    private onBlur() {
+        if(this.props.disabled){
+            return;
+        }
+        const newTime = this.makeTime();
+        console.log(this.state); // TODO: remove console logs
+        console.log(this.props.value); // TODO: remove console logs
+        console.log(newTime); // TODO: remove console logs
+        if(this.props.value && newTime){
+            if(this.props.value.getTime() !== newTime.getTime()){
+                console.log("yes change"); // TODO: remove console logs
+                if (this.props.onUpdate) {
+                    this.props.onUpdate(newTime);
+                }
+            }
+            else{
+                console.log("no change"); // TODO: remove console logs
+            }
+        }
+        else{
+            console.log("undefined"); // TODO: remove console logs
         }
     }
     // converts the 3 input fields, plus the original date component into a Date object
     // returns undefined if one of the date components is empty or invalid
-    // attempts to use the last known date portion of the date/time object
     private makeTime(): Date | undefined {
-        if(this.props.value==null || this.props.value==undefined){
-            var newTime = Moment(this.lastKnownDate);
+        var newTime = Moment(this.props.value);
+        if(this.state.hourValue && this.state.minuteValue && this.state.ampmValue){
+            var hoursInt = parseInt(this.state.hourValue);
+            var minutesInt = parseInt(this.state.minuteValue);
+            if(this.state.hourValue=="" || this.state.minuteValue=="" || 
+                (this.state.ampmValue!="AM" && this.state.ampmValue!="PM") 
+                || isNaN(hoursInt) || hoursInt<1 || hoursInt>12 
+                || isNaN(minutesInt) || this.state.minuteValue.length<2 
+                || minutesInt<0 || minutesInt>59 ) {
+                return undefined;
+            }
+            if(this.state.ampmValue=="AM" && hoursInt==12){
+                hoursInt=0;
+            }
+            if(this.state.ampmValue=="PM" && hoursInt!=12){
+                hoursInt = hoursInt+12
+            }
+            newTime.hour(hoursInt);
+            newTime.minute(minutesInt);
+            return newTime.toDate();
         }
-        else{
-            var newTime = Moment(this.props.value);
-        }
-        var hoursInt = parseInt(this.hourValue);
-        var minutesInt = parseInt(this.minuteValue);
-        if(this.hourValue=="" || this.minuteValue=="" || (this.ampmValue!="AM" && this.ampmValue!="PM") 
-            || isNaN(hoursInt) || hoursInt<1 || hoursInt>12 
-            || isNaN(minutesInt) || this.minuteValue.length<2 || minutesInt<0 || minutesInt>59 ) {
+        else {
             return undefined;
         }
-        if(this.ampmValue=="AM" && hoursInt==12){
-            hoursInt=0;
-        }
-        if(this.ampmValue=="PM" && hoursInt!=12){
-            hoursInt = hoursInt+12
-        }
-        newTime.hour(hoursInt);
-        newTime.minute(minutesInt);
-        return newTime.toDate();
     }
 }

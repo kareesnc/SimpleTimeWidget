@@ -24,7 +24,11 @@ class SimpleTimeWidget extends Component<SimpleTimeWidgetContainerProps> {
     }
 
     private onUpdate(value: Date) {
-        this.props.timeAttribute.setValue(value);
+        const { timeAttribute, onChangeAction } = this.props;
+        timeAttribute.setValue(value);
+        if (onChangeAction && onChangeAction.canExecute) {
+            onChangeAction.execute();
+        }
     }
     private isReadOnly(): boolean {
         return this.props.editable === "never" || this.props.timeAttribute.readOnly;
