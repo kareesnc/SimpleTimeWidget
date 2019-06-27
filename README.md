@@ -18,6 +18,8 @@ Property descriptions:
 * Editable
   * (Default) Access is determined by security/parent entity settings
   * (Never) Widget is never editable  
+* Read-only style
+  * Controls how the widget displays when not editable  
 * Invalid time message
   * An error message to display when the time cannot be parsed. 
     This message does NOT prevent saving, executing microflows, etc. 

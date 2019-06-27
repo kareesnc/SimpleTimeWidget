@@ -24,6 +24,14 @@
                     <enumerationValue key="never">Never</enumerationValue>
                 </enumerationValues>
             </property>
+            <property key="readStyle" type="enumeration" defaultValue="control">
+                <caption>Read-only style</caption>
+                <description/>
+                <enumerationValues>
+                    <enumerationValue key="control">Control</enumerationValue>
+                    <enumerationValue key="text">Text</enumerationValue>
+                </enumerationValues>
+            </property>
             <property key="invalidMessage" type="textTemplate" required="true">
                 <caption>Invalid time message</caption>
                 <description/>

@@ -16,6 +16,8 @@ interface CommonProps {
 
 export type EditableEnum = "default" | "never";
 
+export type ReadStyleEnum = "control" | "text";
+
 export type RequiredEnum = "yes" | "no";
 
 export type ShowClearEnum = "yes" | "no";
@@ -25,6 +27,7 @@ export type RenderNumberEnum = "yes" | "no";
 export interface SimpleTimeWidgetContainerProps extends CommonProps {
     timeAttribute: EditableValue<Date>;
     editable: EditableEnum;
+    readStyle: ReadStyleEnum;
     invalidMessage: DynamicValue<string>;
     required: RequiredEnum;
     requiredMessage?: DynamicValue<string>;
@@ -37,6 +40,7 @@ export interface SimpleTimeWidgetContainerProps extends CommonProps {
 export interface SimpleTimeWidgetPreviewProps extends CommonProps {
     timeAttribute: string;
     editable: EditableEnum;
+    readStyle: ReadStyleEnum;
     invalidMessage: string;
     required: RequiredEnum;
     requiredMessage?: string;
@@ -49,6 +53,7 @@ export interface SimpleTimeWidgetPreviewProps extends CommonProps {
 export interface VisibilityMap {
     timeAttribute: boolean;
     editable: boolean;
+    readStyle: boolean;
     invalidMessage: boolean;
     required: boolean;
     requiredMessage: boolean;

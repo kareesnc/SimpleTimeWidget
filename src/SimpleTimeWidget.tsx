@@ -24,6 +24,7 @@ class SimpleTimeWidget extends Component<SimpleTimeWidgetContainerProps> {
                         tabIndex={this.props.tabIndex}
                         onUpdate={this.onUpdateHandle}
                         disabled={this.isReadOnly()}
+                        showAsText={this.readStyle()}
                         required={required}
                         hasError={!!validationFeedback}
                         invalidMessage={this.invalidMessage()}
@@ -44,6 +45,9 @@ class SimpleTimeWidget extends Component<SimpleTimeWidgetContainerProps> {
     }
     private isReadOnly(): boolean {
         return this.props.editable === "never" || this.props.timeAttribute.readOnly;
+    }
+    private readStyle(): boolean {
+        return this.props.readStyle === "text";
     }
     private invalidMessage(): string | undefined {
         return this.props.invalidMessage ? this.props.invalidMessage.value : "Invalid time";

@@ -11,6 +11,7 @@ export interface InputProps {
     tabIndex?: number;
     onUpdate?: (value: Date | undefined) => void;
     disabled?: boolean;
+    showAsText?: boolean;
     required?: boolean;
     hasError?: boolean;
     invalidMessage?: string;
@@ -71,6 +72,17 @@ export class TimeInput extends Component<InputProps> {
     render(): ReactNode {
         const labelledby = `${this.props.id}-label`
             + (this.props.hasError ? ` ${this.props.id}-error` : "");
+        if(this.props.disabled && this.props.showAsText){
+            return <p 
+                id={this.props.id}
+                className={classNames("form-control-static",this.props.className)}
+                style={this.props.style}
+                tabIndex={this.props.tabIndex}
+                aria-labelledby={labelledby}
+                >
+                    {this.getCurrentHourValue()}:{this.getCurrentMinuteValue()} {this.getCurrentAMPMValue()}
+                </p>;
+        }
         return <div 
                 id={this.props.id}
                 className={this.state.wrapperClassName}
@@ -92,14 +104,14 @@ export class TimeInput extends Component<InputProps> {
                         <option value=""></option>
                         <option value="AM">AM</option>
                         <option value="PM">PM</option>
-                   </select>
-                   <span> </span>
-                   {this.renderClearButton()}
+                    </select>
+                    <span> </span>
+                    {this.renderClearButton()}
                    <Alert>{this.state.validationString}</Alert>
                 </div>; 
     }
 
-    private renderTextInput(isHours: boolean): ReactNode{
+    private renderTextInput(isHours: boolean): ReactNode {
         return <input type="text" 
                     className="form-control" 
                     maxLength={this.inputLength} 
@@ -110,7 +122,7 @@ export class TimeInput extends Component<InputProps> {
                     value={isHours ? this.getCurrentHourValue() : this.getCurrentMinuteValue()}
                     placeholder={isHours ? "HH" : "MM"} />;
     }
-    private renderNumberInput(isHours: boolean): ReactNode{
+    private renderNumberInput(isHours: boolean): ReactNode {
         return <input type="number" 
                     className={classNames("form-control","number-input")} 
                     min={isHours ? 1 : 0} 
@@ -132,6 +144,9 @@ export class TimeInput extends Component<InputProps> {
         return undefined;
     }
     private clearValue() {
+        if(this.props.disabled) {
+            return;
+        }
         this.setState({ 
             hourValue: undefined, 
             minuteValue: undefined, 
@@ -184,14 +199,14 @@ export class TimeInput extends Component<InputProps> {
     // detects whether a change has occurred and, if it has, passes that change up
     // the change will not be passed if the input is disabled, or if the time is invalid
     private onBlur() {
-        if(this.props.disabled){
+        if(this.props.disabled) {
             return;
         }
         const newTime = this.makeTime();
         // if new time is undefined, the time was invalid
-        if(newTime){ 
+        if(newTime) { 
             // if value is undefined but new time is not, the value used to be empty but is now set
-            if(!this.props.value || this.props.value.getTime() !== newTime.getTime()){
+            if(!this.props.value || this.props.value.getTime() !== newTime.getTime()) {
                 if (this.props.onUpdate) {
                     this.props.onUpdate(newTime);
                 }
@@ -214,7 +229,7 @@ export class TimeInput extends Component<InputProps> {
             // if the date portion is not set, set to epoch - Mendix's default time input also sets epoch in this case
             var newTime = Moment("1970-01-01");
         }
-        if(this.state.hourValue && this.state.minuteValue && this.state.ampmValue){
+        if(this.state.hourValue && this.state.minuteValue && this.state.ampmValue) {
             var hoursInt = parseInt(this.state.hourValue);
             var minutesInt = parseInt(this.state.minuteValue);
             if(this.state.hourValue=="" || this.state.minuteValue=="" || 
@@ -223,10 +238,10 @@ export class TimeInput extends Component<InputProps> {
                 || minutesInt<0 || minutesInt>59 ) {
                 return undefined;
             }
-            if(this.state.ampmValue=="AM" && hoursInt==12){
+            if(this.state.ampmValue=="AM" && hoursInt==12) {
                 hoursInt=0;
             }
-            if(this.state.ampmValue=="PM" && hoursInt!=12){
+            if(this.state.ampmValue=="PM" && hoursInt!=12) {
                 hoursInt = hoursInt+12
             }
             newTime.hour(hoursInt);
