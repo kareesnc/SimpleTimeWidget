@@ -29,6 +29,7 @@ export interface SimpleTimeWidgetContainerProps extends CommonProps {
     required: RequiredEnum;
     requiredMessage?: DynamicValue<string>;
     showClear: ShowClearEnum;
+    clearText?: DynamicValue<string>;
     renderNumber: RenderNumberEnum;
     onChangeAction?: ActionValue;
 }
@@ -40,6 +41,7 @@ export interface SimpleTimeWidgetPreviewProps extends CommonProps {
     required: RequiredEnum;
     requiredMessage?: string;
     showClear: ShowClearEnum;
+    clearText?: string;
     renderNumber: RenderNumberEnum;
     onChangeAction?: pages.ClientAction;
 }
@@ -51,6 +53,7 @@ export interface VisibilityMap {
     required: boolean;
     requiredMessage: boolean;
     showClear: boolean;
+    clearText: boolean;
     renderNumber: boolean;
     onChangeAction: boolean;
 }

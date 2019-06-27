@@ -54,6 +54,13 @@
                     <enumerationValue key="no">No</enumerationValue>
                 </enumerationValues>
             </property>
+            <property key="clearText" type="textTemplate" required="false">
+                <caption>Clear button text</caption>
+                <description/>
+                <translations>
+                    <translation lang="en_US">Clear</translation>
+                </translations>
+            </property>
             <property key="renderNumber" type="enumeration" defaultValue="no">
                 <caption>Use number inputs</caption>
                 <description/>

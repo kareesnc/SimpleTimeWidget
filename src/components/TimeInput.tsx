@@ -15,6 +15,7 @@ export interface InputProps {
     hasError?: boolean;
     invalidMessage?: string;
     showClear?: boolean;
+    clearText?: string;
     renderNumber?: boolean;
 }
 interface InputState {
@@ -126,7 +127,7 @@ export class TimeInput extends Component<InputProps> {
                            className="btn time-button"
                            onClick={this.handleClearButton}
                            disabled={this.props.disabled}>
-                    Clear</button>;
+                    {this.props.clearText}</button>;
         }
         return undefined;
     }

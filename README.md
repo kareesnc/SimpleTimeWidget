@@ -29,6 +29,8 @@ Property descriptions:
 * Show clear button
   * Adds a button that will clear the inputs and set the attribute to empty.
     Warning: this will clear the date portion of the date/time attribute as well.  
+* Clear button text
+  * Show a custom value on the clear button.  
 * Use number inputs
   * Converts the type of the hours/minutes input boxes from text to number.
     On mobile devices, this will bring up the number instead of letter keyboard.  
