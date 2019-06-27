@@ -73,6 +73,10 @@ export class TimeInput extends Component<InputProps> {
         const labelledby = `${this.props.id}-label`
             + (this.props.hasError ? ` ${this.props.id}-error` : "");
         if(this.props.disabled && this.props.showAsText){
+            var displayText = "";
+            if(this.props.value){
+                displayText = this.getCurrentHourValue()+":"+this.getCurrentMinuteValue()+" "+this.getCurrentAMPMValue();
+            }
             return <p 
                 id={this.props.id}
                 className={classNames("form-control-static",this.props.className)}
@@ -80,7 +84,7 @@ export class TimeInput extends Component<InputProps> {
                 tabIndex={this.props.tabIndex}
                 aria-labelledby={labelledby}
                 >
-                    {this.getCurrentHourValue()}:{this.getCurrentMinuteValue()} {this.getCurrentAMPMValue()}
+                    {displayText}&nbsp;
                 </p>;
         }
         return <div 
