@@ -40,10 +40,10 @@ If a new time is set before the object is committed, the last known date will be
 This is different from the time-only Mendix input, which permanently clears the date.  
 
 ## Demo project
-[TBA]
+[Demo project](https://github.ncsu.edu/karees/SimpleTimeWidget/blob/master/SimpleTimeWidget-Sample-main.zip)
 
 ## Issues, suggestions and feature requests
-[TBA]
+https://github.ncsu.edu/karees/SimpleTimeWidget/
 
 ## Development and contribution
 Widget created by Kathryn Rees @ NCSU
