@@ -15,14 +15,13 @@ export interface InputProps {
     required?: boolean;
     hasError?: boolean;
     invalidMessage?: string;
-    showClear?: boolean;
-    clearText?: string;
     renderNumber?: boolean;
 }
 interface InputState {
     hourValue?: string;
     minuteValue?: string;
     ampmValue?: string;
+    lastKnownDate: string;
     validationString?: string;
     wrapperClassName: string;
 }
@@ -32,7 +31,6 @@ export class TimeInput extends Component<InputProps> {
     private readonly handleMinuteChange = this.onMinuteChange.bind(this);
     private readonly handleBlur = this.onBlur.bind(this);
     private readonly handleDropdownChange = this.onDropdownChange.bind(this);
-    private readonly handleClearButton = this.clearValue.bind(this);
     private readonly defaultWrapperClass = classNames("time-input",this.props.className);
     private readonly inputLength = 2;
     readonly state: InputState = { 
@@ -40,26 +38,31 @@ export class TimeInput extends Component<InputProps> {
         minuteValue: undefined, 
         ampmValue: undefined,
         validationString: undefined,
+        lastKnownDate: "1970-01-01",
         wrapperClassName: classNames(this.defaultWrapperClass)
     };
     componentDidUpdate(prevProps: InputProps) {
         if (this.props.value !== prevProps.value) {
             if(this.props.value != undefined){
                 const momentValue = Moment(this.props.value);
-                const hourValue = momentValue.format("h");
-                const minuteValue = momentValue.format("mm");
-                const ampmValue = momentValue.format("A");
                 this.setState({ 
-                    hourValue: hourValue, 
-                    minuteValue: minuteValue, 
-                    ampmValue: ampmValue 
+                    hourValue: momentValue.format("h"), 
+                    minuteValue: momentValue.format("mm"), 
+                    ampmValue: momentValue.format("A"),
+                    lastKnownDate: momentValue.format("YYYY-MM-DD")
                 });
             }
             else{
+                // attempt to fetch date from prior value
+                var lastDate = "1970-01-01";
+                if(prevProps.value != undefined){
+                    lastDate = Moment(prevProps.value).format("YYYY-MM-DD");
+                }
                 this.setState({ 
                     hourValue: undefined, 
                     minuteValue: undefined, 
-                    ampmValue: undefined 
+                    ampmValue: undefined,
+                    lastKnownDate: lastDate
                 });
             }
             this.setState({ 
@@ -109,8 +112,6 @@ export class TimeInput extends Component<InputProps> {
                         <option value="AM">AM</option>
                         <option value="PM">PM</option>
                     </select>
-                    <span> </span>
-                    {this.renderClearButton()}
                    <Alert>{this.state.validationString}</Alert>
                 </div>; 
     }
@@ -136,31 +137,6 @@ export class TimeInput extends Component<InputProps> {
                     disabled={this.props.disabled}
                     value={isHours ? this.getCurrentHourValue() : this.getCurrentMinuteValue()}
                     placeholder={isHours ? "HH" : "MM"} />;
-    }
-    private renderClearButton(): ReactNode | undefined {
-        if(this.props.showClear){
-            return <button type="button"
-                           className="btn time-button"
-                           onClick={this.handleClearButton}
-                           disabled={this.props.disabled}>
-                    {this.props.clearText}</button>;
-        }
-        return undefined;
-    }
-    private clearValue() {
-        if(this.props.disabled) {
-            return;
-        }
-        this.setState({ 
-            hourValue: undefined, 
-            minuteValue: undefined, 
-            ampmValue: undefined, 
-            validationString: undefined,
-            wrapperClassName: classNames(this.defaultWrapperClass)
-        });
-        if (this.props.onUpdate) {
-            this.props.onUpdate(undefined);
-        }
     }
 
     private onHourChange(event: ChangeEvent<HTMLInputElement>) {
@@ -208,15 +184,35 @@ export class TimeInput extends Component<InputProps> {
         }
         const newTime = this.makeTime();
         // if new time is undefined, the time was invalid
+        console.log(this.state);
         if(newTime) { 
             // if value is undefined but new time is not, the value used to be empty but is now set
+            console.log('if');
             if(!this.props.value || this.props.value.getTime() !== newTime.getTime()) {
                 if (this.props.onUpdate) {
                     this.props.onUpdate(newTime);
                 }
             }
+            this.setState({ 
+                validationString: undefined,
+                wrapperClassName: classNames(this.defaultWrapperClass)
+            });
+        }
+        // unless all 3 inputs are empty, then set empty
+        else if((this.state.hourValue=="" || this.state.hourValue==undefined)
+                && (this.state.minuteValue=="" || this.state.minuteValue==undefined) 
+                && (this.state.ampmValue=="" || this.state.ampmValue==undefined)) {
+            console.log('else if');
+            if (this.props.onUpdate) {
+                this.props.onUpdate(undefined);
+            }
+            this.setState({ 
+                validationString: undefined,
+                wrapperClassName: classNames(this.defaultWrapperClass)
+            });
         }
         else {
+            console.log('else');
             this.setState({ 
                 validationString: this.props.invalidMessage,
                 wrapperClassName: classNames("has-error", this.defaultWrapperClass)
@@ -230,8 +226,8 @@ export class TimeInput extends Component<InputProps> {
             var newTime = Moment(this.props.value);
         }
         else {
-            // if the date portion is not set, set to epoch - Mendix's default time input also sets epoch in this case
-            var newTime = Moment("1970-01-01");
+            // if the date portion is not set, try to set last date or epoch
+            var newTime = Moment(this.state.lastKnownDate);
         }
         if(this.state.hourValue && this.state.minuteValue && this.state.ampmValue) {
             var hoursInt = parseInt(this.state.hourValue);

@@ -18,22 +18,18 @@ export type EditableEnum = "default" | "never";
 
 export type ReadStyleEnum = "control" | "text";
 
+export type InputStyleEnum = "text" | "number";
+
 export type RequiredEnum = "yes" | "no";
-
-export type ShowClearEnum = "yes" | "no";
-
-export type RenderNumberEnum = "yes" | "no";
 
 export interface SimpleTimeWidgetContainerProps extends CommonProps {
     timeAttribute: EditableValue<Date>;
     editable: EditableEnum;
     readStyle: ReadStyleEnum;
+    inputStyle: InputStyleEnum;
     invalidMessage: DynamicValue<string>;
     required: RequiredEnum;
     requiredMessage?: DynamicValue<string>;
-    showClear: ShowClearEnum;
-    clearText?: DynamicValue<string>;
-    renderNumber: RenderNumberEnum;
     onChangeAction?: ActionValue;
 }
 
@@ -41,12 +37,10 @@ export interface SimpleTimeWidgetPreviewProps extends CommonProps {
     timeAttribute: string;
     editable: EditableEnum;
     readStyle: ReadStyleEnum;
+    inputStyle: InputStyleEnum;
     invalidMessage: string;
     required: RequiredEnum;
     requiredMessage?: string;
-    showClear: ShowClearEnum;
-    clearText?: string;
-    renderNumber: RenderNumberEnum;
     onChangeAction?: pages.ClientAction;
 }
 
@@ -54,11 +48,9 @@ export interface VisibilityMap {
     timeAttribute: boolean;
     editable: boolean;
     readStyle: boolean;
+    inputStyle: boolean;
     invalidMessage: boolean;
     required: boolean;
     requiredMessage: boolean;
-    showClear: boolean;
-    clearText: boolean;
-    renderNumber: boolean;
     onChangeAction: boolean;
 }

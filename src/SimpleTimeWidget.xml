@@ -32,6 +32,14 @@
                     <enumerationValue key="text">Text</enumerationValue>
                 </enumerationValues>
             </property>
+            <property key="inputStyle" type="enumeration" defaultValue="text">
+                <caption>Input style</caption>
+                <description/>
+                <enumerationValues>
+                    <enumerationValue key="text">Text</enumerationValue>
+                    <enumerationValue key="number">Number</enumerationValue>
+                </enumerationValues>
+            </property>
             <property key="invalidMessage" type="textTemplate" required="true">
                 <caption>Invalid time message</caption>
                 <description/>
@@ -53,29 +61,6 @@
                 <translations>
                     <translation lang="en_US">Time is required</translation>
                 </translations>
-            </property>
-            <property key="showClear" type="enumeration" defaultValue="no">
-                <caption>Show clear button</caption>
-                <description/>
-                <enumerationValues>
-                    <enumerationValue key="yes">Yes</enumerationValue>
-                    <enumerationValue key="no">No</enumerationValue>
-                </enumerationValues>
-            </property>
-            <property key="clearText" type="textTemplate" required="false">
-                <caption>Clear button text</caption>
-                <description/>
-                <translations>
-                    <translation lang="en_US">Clear</translation>
-                </translations>
-            </property>
-            <property key="renderNumber" type="enumeration" defaultValue="no">
-                <caption>Use number inputs</caption>
-                <description/>
-                <enumerationValues>
-                    <enumerationValue key="yes">Yes</enumerationValue>
-                    <enumerationValue key="no">No</enumerationValue>
-                </enumerationValues>
             </property>
             <property key="onChangeAction" type="action" required="false">
                 <caption>OnChange action</caption>

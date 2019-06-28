@@ -28,16 +28,15 @@ Property descriptions:
   * When yes, causes Mendix validation to fail when the date attribute is empty.  
 * Required message
   * The error message to show when the required validation fails.  
-* Show clear button
-  * Adds a button that will clear the inputs and set the attribute to empty.
-    Warning: this will clear the date portion of the date/time attribute as well.  
-* Clear button text
-  * Show a custom value on the clear button.  
 * Use number inputs
   * Converts the type of the hours/minutes input boxes from text to number.
     On mobile devices, this will bring up the number instead of letter keyboard.  
 * OnChange action
   * Enables Mendix on change behavior. Will trigger when a new, valid value is input.  
+Notes on empty value:  
+When all 3 inputs are cleared, the whole date/time attribute will be set to empty. 
+If a new time is set before the object is committed, the last known date will be used. 
+This is different from the time-only Mendix input, which permanently clears the date.  
 
 ## Demo project
 [TBA]

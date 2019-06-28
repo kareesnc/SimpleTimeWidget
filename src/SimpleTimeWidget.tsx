@@ -28,8 +28,6 @@ class SimpleTimeWidget extends Component<SimpleTimeWidgetContainerProps> {
                         required={required}
                         hasError={!!validationFeedback}
                         invalidMessage={this.invalidMessage()}
-                        showClear={this.showClear()}
-                        clearText={this.clearText()}
                         renderNumber={this.renderNumber()}
                     />
                     <Alert id={this.props.id + "-error"}>{validationFeedback}</Alert>
@@ -52,14 +50,8 @@ class SimpleTimeWidget extends Component<SimpleTimeWidgetContainerProps> {
     private invalidMessage(): string | undefined {
         return this.props.invalidMessage ? this.props.invalidMessage.value : "Invalid time";
     }
-    private showClear(): boolean {
-        return this.props.showClear === "yes";
-    }
-    private clearText(): string | undefined {
-        return this.props.clearText ? this.props.clearText.value : "Clear";
-    }
     private renderNumber(): boolean {
-        return this.props.renderNumber === "yes";
+        return this.props.inputStyle === "number";
     }
     private validator(value: Date | undefined): string | undefined {
         const { required, requiredMessage } = this.props;
