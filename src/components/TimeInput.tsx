@@ -184,10 +184,8 @@ export class TimeInput extends Component<InputProps> {
         }
         const newTime = this.makeTime();
         // if new time is undefined, the time was invalid
-        console.log(this.state);
         if(newTime) { 
             // if value is undefined but new time is not, the value used to be empty but is now set
-            console.log('if');
             if(!this.props.value || this.props.value.getTime() !== newTime.getTime()) {
                 if (this.props.onUpdate) {
                     this.props.onUpdate(newTime);
@@ -202,7 +200,6 @@ export class TimeInput extends Component<InputProps> {
         else if((this.state.hourValue=="" || this.state.hourValue==undefined)
                 && (this.state.minuteValue=="" || this.state.minuteValue==undefined) 
                 && (this.state.ampmValue=="" || this.state.ampmValue==undefined)) {
-            console.log('else if');
             if (this.props.onUpdate) {
                 this.props.onUpdate(undefined);
             }
@@ -212,7 +209,6 @@ export class TimeInput extends Component<InputProps> {
             });
         }
         else {
-            console.log('else');
             this.setState({ 
                 validationString: this.props.invalidMessage,
                 wrapperClassName: classNames("has-error", this.defaultWrapperClass)
