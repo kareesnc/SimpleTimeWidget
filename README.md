@@ -20,6 +20,9 @@ Property descriptions:
   * (Never) Widget is never editable  
 * Read-only style
   * Controls how the widget displays when not editable  
+* Input style
+  * Select between the standard text and special number input boxes.
+    On mobile devices, number style inputs will bring up the number keyboard.  
 * Invalid time message
   * An error message to display when the time cannot be parsed. 
     This message does NOT prevent saving, executing microflows, etc. 
@@ -28,9 +31,6 @@ Property descriptions:
   * When yes, causes Mendix validation to fail when the date attribute is empty.  
 * Required message
   * The error message to show when the required validation fails.  
-* Use number inputs
-  * Converts the type of the hours/minutes input boxes from text to number.
-    On mobile devices, this will bring up the number instead of letter keyboard.  
 * OnChange action
   * Enables Mendix on change behavior. Will trigger when a new, valid value is input.  
 Notes on empty value:  
