@@ -33,6 +33,7 @@ Property descriptions:
   * The error message to show when the required validation fails.  
 * OnChange action
   * Enables Mendix on change behavior. Will trigger when a new, valid value is input.  
+
 Notes on empty value:  
 When all 3 inputs are cleared, the whole date/time attribute will be set to empty. 
 If a new time is set before the object is committed, the last known date will be used. 
