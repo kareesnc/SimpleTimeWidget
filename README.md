@@ -1,5 +1,5 @@
 ## SimpleTimeWidget
-Simple entry for time portion of date/time objects.
+Simple entry for time portion of date/time attributes.
 
 ## Features
 ![Sample screenshot](demo.png)  
