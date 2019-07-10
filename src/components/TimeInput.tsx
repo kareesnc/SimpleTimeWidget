@@ -16,6 +16,7 @@ export interface InputProps {
     hasError?: boolean;
     invalidMessage?: string;
     renderNumber?: boolean;
+    render24hr?: boolean;
 }
 interface InputState {
     hourValue?: string;
@@ -45,12 +46,22 @@ export class TimeInput extends Component<InputProps> {
         if (this.props.value !== prevProps.value) {
             if(this.props.value != undefined){
                 const momentValue = Moment(this.props.value);
-                this.setState({ 
-                    hourValue: momentValue.format("h"), 
-                    minuteValue: momentValue.format("mm"), 
-                    ampmValue: momentValue.format("A"),
-                    lastKnownDate: momentValue.format("YYYY-MM-DD")
-                });
+                if(this.props.render24hr) {
+                    this.setState({ 
+                        hourValue: momentValue.format("H"), 
+                        minuteValue: momentValue.format("mm"), 
+                        ampmValue: undefined,
+                        lastKnownDate: momentValue.format("YYYY-MM-DD")
+                    });
+                }
+                else {
+                    this.setState({ 
+                        hourValue: momentValue.format("h"), 
+                        minuteValue: momentValue.format("mm"), 
+                        ampmValue: momentValue.format("A"),
+                        lastKnownDate: momentValue.format("YYYY-MM-DD")
+                    });
+                }
             }
             else{
                 // attempt to fetch date from prior value
@@ -78,7 +89,10 @@ export class TimeInput extends Component<InputProps> {
         if(this.props.disabled && this.props.showAsText){
             var displayText = "";
             if(this.props.value){
-                displayText = this.getCurrentHourValue()+":"+this.getCurrentMinuteValue()+" "+this.getCurrentAMPMValue();
+                displayText = this.getCurrentHourValue()+":"+this.getCurrentMinuteValue();
+                if(!this.props.render24hr) {
+                    displayText = displayText+" "+this.getCurrentAMPMValue();
+                }
             }
             return <p 
                 id={this.props.id}
@@ -102,16 +116,8 @@ export class TimeInput extends Component<InputProps> {
                     {this.props.renderNumber ? this.renderNumberInput(true) : this.renderTextInput(true)}
                     <span> : </span>
                     {this.props.renderNumber ? this.renderNumberInput(false) : this.renderTextInput(false)}
-                    <span> </span>
-                    <select className="form-control" 
-                           onChange={this.handleDropdownChange}
-                           onBlur={this.handleBlur}
-                           disabled={this.props.disabled}
-                           value={this.getCurrentAMPMValue()}>
-                        <option value=""></option>
-                        <option value="AM">AM</option>
-                        <option value="PM">PM</option>
-                    </select>
+                    {this.props.render24hr ? null : <span> </span>}
+                    {this.props.render24hr ? null : this.renderAMPMInput()}
                    <Alert>{this.state.validationString}</Alert>
                 </div>; 
     }
@@ -137,6 +143,17 @@ export class TimeInput extends Component<InputProps> {
                     disabled={this.props.disabled}
                     value={isHours ? this.getCurrentHourValue() : this.getCurrentMinuteValue()}
                     placeholder={isHours ? "HH" : "MM"} />;
+    }
+    private renderAMPMInput(): ReactNode {
+        return      <select className="form-control" 
+                           onChange={this.handleDropdownChange}
+                           onBlur={this.handleBlur}
+                           disabled={this.props.disabled}
+                           value={this.getCurrentAMPMValue()}>
+                        <option value=""></option>
+                        <option value="AM">AM</option>
+                        <option value="PM">PM</option>
+                    </select>;
     }
 
     private onHourChange(event: ChangeEvent<HTMLInputElement>) {
@@ -225,24 +242,34 @@ export class TimeInput extends Component<InputProps> {
             // if the date portion is not set, try to set last date or epoch
             var newTime = Moment(this.state.lastKnownDate);
         }
-        if(this.state.hourValue && this.state.minuteValue && this.state.ampmValue) {
+        if(this.state.hourValue && this.state.minuteValue) {
             var hoursInt = parseInt(this.state.hourValue);
             var minutesInt = parseInt(this.state.minuteValue);
-            if(this.state.hourValue=="" || this.state.minuteValue=="" || 
-                (this.state.ampmValue!="AM" && this.state.ampmValue!="PM") 
-                || isNaN(hoursInt) || hoursInt<1 || hoursInt>12 || isNaN(minutesInt) 
-                || minutesInt<0 || minutesInt>59 ) {
-                return undefined;
+            if(this.props.render24hr) {
+                if( isNaN(hoursInt) || hoursInt<0 || hoursInt>23 
+                    || isNaN(minutesInt) || minutesInt<0 || minutesInt>59 ) {
+                    return undefined;
+                }
+                newTime.hour(hoursInt);
+                newTime.minute(minutesInt);
+                return newTime.toDate();
             }
-            if(this.state.ampmValue=="AM" && hoursInt==12) {
-                hoursInt=0;
+            else {
+                if((this.state.ampmValue!="AM" && this.state.ampmValue!="PM") 
+                    || isNaN(hoursInt) || hoursInt<1 || hoursInt>12 
+                    || isNaN(minutesInt) || minutesInt<0 || minutesInt>59 ) {
+                    return undefined;
+                }
+                if(this.state.ampmValue=="AM" && hoursInt==12) {
+                    hoursInt=0;
+                }
+                if(this.state.ampmValue=="PM" && hoursInt!=12) {
+                    hoursInt = hoursInt+12
+                }
+                newTime.hour(hoursInt);
+                newTime.minute(minutesInt);
+                return newTime.toDate();
             }
-            if(this.state.ampmValue=="PM" && hoursInt!=12) {
-                hoursInt = hoursInt+12
-            }
-            newTime.hour(hoursInt);
-            newTime.minute(minutesInt);
-            return newTime.toDate();
         }
         else {
             return undefined;

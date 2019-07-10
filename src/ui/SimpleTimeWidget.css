@@ -10,6 +10,3 @@ is required to fit all 3 boxes on the same line
 .time-input input[type="number"] {
     max-width: 70px;
 }
-.time-input .time-button {
-    vertical-align: top;
-}

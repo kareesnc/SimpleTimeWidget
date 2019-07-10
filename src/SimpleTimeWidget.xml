@@ -40,6 +40,14 @@
                     <enumerationValue key="number">Number</enumerationValue>
                 </enumerationValues>
             </property>
+            <property key="hoursMode" type="enumeration" defaultValue="x12hr">
+                <caption>12 or 24-hour mode</caption>
+                <description/>
+                <enumerationValues>
+                    <enumerationValue key="x12hr">12-hour</enumerationValue>
+                    <enumerationValue key="x24hr">24-hour</enumerationValue>
+                </enumerationValues>
+            </property>
             <property key="invalidMessage" type="textTemplate" required="true">
                 <caption>Invalid time message</caption>
                 <description/>
