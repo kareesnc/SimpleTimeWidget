@@ -8,72 +8,76 @@
     <icon>iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAABm0lEQVRo3u2ayw7EIAhFew3//8vOahJngnJRqqSpq66Qw0uUotZ6RS8AQ6G1VoTvGQFiKW6tCLBpkFXlo6HcIAyAJRNAOJALpAcxkgFgGswDQ4NoEB4FmX00IBZGVkKJsbbD28P9LaAy44U7SrYl38rNMhtK328mcVlvaPJZGGGtdGJ5jCUrZ0QUoLdyavlSLIhT3hjpoBm6ZIdgYcr1kFVG7gIQUpUiqpqmR6uzMNVCK4+7ANgqJlHlb2d+dHut1kWRVvf2Wguy8bxkf0GSLFzXVTfF8a1V7Q2tbEuYAyhNHgzOM8mgRER7L5k9QHTAezyy0zDPqVrttTFDy/72Wi9IRhArT05deQdX3J/8MMtvluRnrtriuSufOgD/3w66V93eS0r2XqtNiWdWrf831UwH5MgbqkcywlgQ3dBix11RZdkjp6ebeCxy+qVx6mTXyFvBkXDai6Z3MApiMlsZJVa9aVnfCndhY3JmPO31ysp4ujg2wu5k9/wwIE6roTdHmQm3lVBy58hs7iyE2J6fau6AOvqb02KlC28XPoCXMYaNBNHlAAAAAElFTkSuQmCC</icon>
     <properties>
         <propertyGroup caption="General">
-            <systemProperty key="Label" />
-            <property key="timeAttribute" type="attribute">
-                <caption>Date/time attribute</caption>
-                <description/>
-                <attributeTypes>
-                    <attributeType name="DateTime"/>
-                </attributeTypes>
-            </property>
-            <property key="editable" type="enumeration" defaultValue="default">
-                <caption>Editable</caption>
-                <description/>
-                <enumerationValues>
-                    <enumerationValue key="default">Default</enumerationValue>
-                    <enumerationValue key="never">Never</enumerationValue>
-                </enumerationValues>
-            </property>
-            <property key="readStyle" type="enumeration" defaultValue="control">
-                <caption>Read-only style</caption>
-                <description/>
-                <enumerationValues>
-                    <enumerationValue key="control">Control</enumerationValue>
-                    <enumerationValue key="text">Text</enumerationValue>
-                </enumerationValues>
-            </property>
-            <property key="inputStyle" type="enumeration" defaultValue="text">
-                <caption>Input style</caption>
-                <description/>
-                <enumerationValues>
-                    <enumerationValue key="text">Text</enumerationValue>
-                    <enumerationValue key="number">Number</enumerationValue>
-                </enumerationValues>
-            </property>
-            <property key="hoursMode" type="enumeration" defaultValue="x12hr">
-                <caption>12 or 24-hour mode</caption>
-                <description/>
-                <enumerationValues>
-                    <enumerationValue key="x12hr">12-hour</enumerationValue>
-                    <enumerationValue key="x24hr">24-hour</enumerationValue>
-                </enumerationValues>
-            </property>
-            <property key="invalidMessage" type="textTemplate" required="true">
-                <caption>Invalid time message</caption>
-                <description/>
-                <translations>
-                    <translation lang="en_US">Invalid time</translation>
-                </translations>
-            </property>
-            <property key="required" type="enumeration" defaultValue="no">
-                <caption>Required</caption>
-                <description/>
-                <enumerationValues>
-                    <enumerationValue key="yes">Yes</enumerationValue>
-                    <enumerationValue key="no">No</enumerationValue>
-                </enumerationValues>
-            </property>
-            <property key="requiredMessage" type="textTemplate" required="false">
-                <caption>Required message</caption>
-                <description/>
-                <translations>
-                    <translation lang="en_US">Time is required</translation>
-                </translations>
-            </property>
-            <property key="onChangeAction" type="action" required="false">
-                <caption>OnChange action</caption>
-                <description/>
-            </property>
+            <propertyGroup caption="Label">
+                <systemProperty key="Label" />
+            </propertyGroup>
+            <propertyGroup caption="Data">
+                <property key="timeAttribute" type="attribute">
+                    <caption>Date/time attribute</caption>
+                    <description/>
+                    <attributeTypes>
+                        <attributeType name="DateTime"/>
+                    </attributeTypes>
+                </property>
+                <systemProperty key="Editability"/>
+                <property key="readStyle" type="enumeration" defaultValue="control">
+                    <caption>Read-only style</caption>
+                    <description/>
+                    <enumerationValues>
+                        <enumerationValue key="control">Control</enumerationValue>
+                        <enumerationValue key="text">Text</enumerationValue>
+                    </enumerationValues>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Style">
+                <systemProperty key="Visibility"/>
+                <property key="inputStyle" type="enumeration" defaultValue="text">
+                    <caption>Input style</caption>
+                    <description/>
+                    <enumerationValues>
+                        <enumerationValue key="text">Text</enumerationValue>
+                        <enumerationValue key="number">Number</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="hoursMode" type="enumeration" defaultValue="x12hr">
+                    <caption>12 or 24-hour mode</caption>
+                    <description/>
+                    <enumerationValues>
+                        <enumerationValue key="x12hr">12-hour</enumerationValue>
+                        <enumerationValue key="x24hr">24-hour</enumerationValue>
+                    </enumerationValues>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Validation">
+                <property key="invalidMessage" type="textTemplate" required="true">
+                    <caption>Invalid time message</caption>
+                    <description/>
+                    <translations>
+                        <translation lang="en_US">Invalid time</translation>
+                    </translations>
+                </property>
+                <property key="required" type="enumeration" defaultValue="no">
+                    <caption>Required</caption>
+                    <description/>
+                    <enumerationValues>
+                        <enumerationValue key="yes">Yes</enumerationValue>
+                        <enumerationValue key="no">No</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="requiredMessage" type="textTemplate" required="false">
+                    <caption>Required message</caption>
+                    <description/>
+                    <translations>
+                        <translation lang="en_US">Time is required</translation>
+                    </translations>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Actions">
+                <property key="onChangeAction" type="action" required="false">
+                    <caption>OnChange action</caption>
+                    <description/>
+                </property>
+            </propertyGroup>
         </propertyGroup>
     </properties>
 </widget>

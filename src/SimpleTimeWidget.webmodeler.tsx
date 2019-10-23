@@ -7,7 +7,7 @@ declare function require(name: string): string;
 // eslint-disable-next-line @typescript-eslint/class-name-casing
 export class preview extends Component<SimpleTimeWidgetPreviewProps> {
     render(): ReactNode {
-        return <TimeInput value={undefined} disabled={this.props.editable === "never"} />;
+        return <TimeInput value={undefined} />;
     }
 }
 

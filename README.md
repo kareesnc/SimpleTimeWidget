@@ -16,10 +16,11 @@ Property descriptions:
 * Date/time attribute (required)  
   * The attribute for this widget
 * Editable
-  * (Default) Access is determined by entity security/data view settings
-  * (Never) Widget is never editable  
+  * Control whether the widget is editable, using default Mendix behavior  
 * Read-only style
   * Controls how the widget displays when not editable  
+* Visible
+  * Control whether the widget is visible, using default Mendix behavior  
 * Input style
   * Select between the standard text and special number input boxes.
     On mobile devices, number style inputs will bring up the number keyboard.  

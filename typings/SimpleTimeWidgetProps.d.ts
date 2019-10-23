@@ -14,8 +14,6 @@ interface CommonProps {
     tabIndex: number;
 }
 
-export type EditableEnum = "default" | "never";
-
 export type ReadStyleEnum = "control" | "text";
 
 export type InputStyleEnum = "text" | "number";
@@ -26,7 +24,6 @@ export type RequiredEnum = "yes" | "no";
 
 export interface SimpleTimeWidgetContainerProps extends CommonProps {
     timeAttribute: EditableValue<Date>;
-    editable: EditableEnum;
     readStyle: ReadStyleEnum;
     inputStyle: InputStyleEnum;
     hoursMode: HoursModeEnum;
@@ -38,7 +35,6 @@ export interface SimpleTimeWidgetContainerProps extends CommonProps {
 
 export interface SimpleTimeWidgetPreviewProps extends CommonProps {
     timeAttribute: string;
-    editable: EditableEnum;
     readStyle: ReadStyleEnum;
     inputStyle: InputStyleEnum;
     hoursMode: HoursModeEnum;
@@ -50,7 +46,6 @@ export interface SimpleTimeWidgetPreviewProps extends CommonProps {
 
 export interface VisibilityMap {
     timeAttribute: boolean;
-    editable: boolean;
     readStyle: boolean;
     inputStyle: boolean;
     hoursMode: boolean;
