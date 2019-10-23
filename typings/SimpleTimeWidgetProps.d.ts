@@ -4,11 +4,11 @@
  * @author Mendix Widgets Team
  */
 import { CSSProperties } from "react";
-import { pages } from "mendixmodelsdk";
-import { ActionValue, DynamicValue, EditableValue } from "@mendix/pluggable-widgets-api/properties";
+import { ActionPreview } from "@mendix/pluggable-widgets-typing-generator/dist/typings";
+import { ActionValue, DynamicValue, EditableValue } from "mendix";
 
 interface CommonProps {
-    id: string;
+    name: string;
     class: string;
     style?: CSSProperties;
     tabIndex: number;
@@ -41,7 +41,7 @@ export interface SimpleTimeWidgetPreviewProps extends CommonProps {
     invalidMessage: string;
     required: RequiredEnum;
     requiredMessage?: string;
-    onChangeAction?: pages.ClientAction;
+    onChangeAction?: ActionPreview;
 }
 
 export interface VisibilityMap {

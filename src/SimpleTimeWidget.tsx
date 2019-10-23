@@ -31,7 +31,12 @@ class SimpleTimeWidget extends Component<SimpleTimeWidgetContainerProps> {
                         renderNumber={this.inputStyle()}
                         render24hr={this.hoursMode()}
                     />
-                    <Alert id={this.props.id + "-error"}>{validationFeedback}</Alert>
+                    <Alert 
+                        id={this.props.id + "-validation-error"}
+                        className="time-input-alert"
+                    >
+                        {validationFeedback}
+                    </Alert>
                 </Fragment>;
     }
 

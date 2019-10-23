@@ -1,4 +1,4 @@
-import { Component, ReactNode, CSSProperties, ChangeEvent, createElement } from "react";
+import { Component, ReactNode, Fragment, CSSProperties, ChangeEvent, createElement } from "react";
 import Moment from "moment";
 import classNames from "classnames";
 import { Alert } from "../components/Alert";
@@ -40,7 +40,7 @@ export class TimeInput extends Component<InputProps> {
         ampmValue: undefined,
         validationString: undefined,
         lastKnownDate: "1970-01-01",
-        wrapperClassName: classNames(this.defaultWrapperClass)
+        wrapperClassName: this.defaultWrapperClass
     };
     componentDidUpdate(prevProps: InputProps) {
         if (this.props.value !== prevProps.value) {
@@ -76,10 +76,7 @@ export class TimeInput extends Component<InputProps> {
                     lastKnownDate: lastDate
                 });
             }
-            this.setState({ 
-                validationString: undefined,
-                wrapperClassName: classNames(this.defaultWrapperClass)
-            });
+            this.clearError();
         }
     }
 
@@ -104,27 +101,33 @@ export class TimeInput extends Component<InputProps> {
                     {displayText}&nbsp;
                 </p>;
         }
-        return <div 
-                id={this.props.id}
-                className={this.state.wrapperClassName}
-                style={this.props.style}
-                tabIndex={this.props.tabIndex}
-                aria-labelledby={labelledby}
-                aria-invalid={this.props.hasError}
-                aria-required={this.props.required}
+        return  <Fragment>
+                <div 
+                    id={this.props.id}
+                    className={this.state.wrapperClassName}
+                    style={this.props.style}
+                    tabIndex={this.props.tabIndex}
+                    aria-labelledby={labelledby}
+                    aria-invalid={this.props.hasError}
+                    aria-required={this.props.required}
                 >
                     {this.props.renderNumber ? this.renderNumberInput(true) : this.renderTextInput(true)}
-                    <span> : </span>
+                    <span className="time-input-item">:</span>
                     {this.props.renderNumber ? this.renderNumberInput(false) : this.renderTextInput(false)}
-                    {this.props.render24hr ? null : <span> </span>}
                     {this.props.render24hr ? null : this.renderAMPMInput()}
-                   <Alert>{this.state.validationString}</Alert>
-                </div>; 
+                </div>
+                <Alert 
+                    id={this.props.id + "-input-error"}
+                    className="time-input-alert"
+                >
+                    {this.state.validationString}
+                </Alert>
+                </Fragment>; 
     }
 
     private renderTextInput(isHours: boolean): ReactNode {
         return <input type="text" 
-                    className="form-control" 
+                    className={classNames("form-control","time-input-item")} 
                     maxLength={this.inputLength} 
                     size={this.inputLength} 
                     onChange={isHours ? this.handleHourChange : this.handleMinuteChange}
@@ -135,7 +138,7 @@ export class TimeInput extends Component<InputProps> {
     }
     private renderNumberInput(isHours: boolean): ReactNode {
         return <input type="number" 
-                    className={classNames("form-control","number-input")} 
+                    className={classNames("form-control","time-input-item","number-input")} 
                     min={isHours ? 1 : 0} 
                     max={isHours ? 12 : 59} 
                     onChange={isHours ? this.handleHourChange : this.handleMinuteChange}
@@ -145,7 +148,7 @@ export class TimeInput extends Component<InputProps> {
                     placeholder={isHours ? "HH" : "MM"} />;
     }
     private renderAMPMInput(): ReactNode {
-        return      <select className="form-control" 
+        return      <select className={classNames("form-control","time-input-item")} 
                            onChange={this.handleDropdownChange}
                            onBlur={this.handleBlur}
                            disabled={this.props.disabled}
@@ -193,6 +196,23 @@ export class TimeInput extends Component<InputProps> {
             : nonStateVal;
     }
 
+    // sets the error message and the has-error class
+    // it would be better if has-error could be set on the form-group instead
+    private setError() {
+        this.setState({ 
+            validationString: this.props.invalidMessage,
+            wrapperClassName: classNames("has-error", this.defaultWrapperClass)
+        });
+        
+    }
+    // clear the error message and remove the has-error class
+    private clearError() {
+        this.setState({ 
+            validationString: undefined,
+            wrapperClassName: this.defaultWrapperClass
+        });
+    }
+
     // detects whether a change has occurred and, if it has, passes that change up
     // the change will not be passed if the input is disabled, or if the time is invalid
     private onBlur() {
@@ -208,10 +228,7 @@ export class TimeInput extends Component<InputProps> {
                     this.props.onUpdate(newTime);
                 }
             }
-            this.setState({ 
-                validationString: undefined,
-                wrapperClassName: classNames(this.defaultWrapperClass)
-            });
+            this.clearError();
         }
         // unless all 3 inputs are empty, then set empty
         else if((this.state.hourValue=="" || this.state.hourValue==undefined)
@@ -220,16 +237,10 @@ export class TimeInput extends Component<InputProps> {
             if (this.props.onUpdate) {
                 this.props.onUpdate(undefined);
             }
-            this.setState({ 
-                validationString: undefined,
-                wrapperClassName: classNames(this.defaultWrapperClass)
-            });
+            this.clearError();
         }
         else {
-            this.setState({ 
-                validationString: this.props.invalidMessage,
-                wrapperClassName: classNames("has-error", this.defaultWrapperClass)
-            });
+            this.setError();
         }
     }
     // converts the 3 input fields, plus the original date component into a Date object

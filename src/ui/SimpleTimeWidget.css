@@ -3,10 +3,27 @@ Overrides the default Mendix input styles
 Despite the warning on the width property, it 
 is required to fit all 3 boxes on the same line
 */
-.time-input input, .time-input select {
-    display: inline;
+.time-input {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+.time-input .time-input-item {
     width: auto;
+    flex-basis: auto;
+    flex: 0 1 auto;
+}
+.time-input select {
+    margin-left: 10px;
+    padding-left: 10px;
+}
+.time-input span {
+    margin: 0 5px;
 }
 .time-input input[type="number"] {
     max-width: 70px;
+}
+.time-input-alert {
+    margin: 8px 0 0 0;
+    width: 100%;
 }
