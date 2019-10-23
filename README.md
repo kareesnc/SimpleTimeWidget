@@ -42,11 +42,11 @@ When all inputs are cleared, the whole date/time attribute will be set to empty.
 If a new time is set before the object is committed, the last known date will be used. 
 
 ## Demo project
-[Demo project live](https://simpletimewidget-s-sandbox.mxapps.io/index.html)
-[Demo project ZIP](https://github.com/kareesnc/SimpleTimeWidget/download/1.0.0/SimpleTimeWidget-Sample.zip)
+[Demo project live](https://simpletimewidget-s-sandbox.mxapps.io/index.html)  
+[Demo project ZIP](https://github.com/kareesnc/SimpleTimeWidget/download/1.0.0/SimpleTimeWidget-Sample.zip)  
 
 ## Issues, suggestions and feature requests
-https://github.com/kareesnc/SimpleTimeWidget
+https://github.com/kareesnc/SimpleTimeWidget  
 
 ## Development and contribution
 Widget created by Kathryn Rees @ NCSU
