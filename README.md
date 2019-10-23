@@ -2,7 +2,7 @@
 Simple entry for time portion of date/time attributes.
 
 ## Features
-![Sample screenshot](demo.png)  
+![Sample screenshot](https://raw.githubusercontent.com/kareesnc/SimpleTimeWidget/master/demo.png)  
 This widget's purpose is to provide a time input that is both easy and fast to use. 
 Provides an input for the time portion only of a date/time Mendix attribute. 
 Can be used alone, or paired with a calendar-style date picker. 
