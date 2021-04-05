@@ -43,7 +43,7 @@ If a new time is set before the object is committed, the last known date will be
 
 ## Demo project
 [Demo project live](https://simpletimewidget-s-sandbox.mxapps.io/index.html)  
-[Demo project ZIP](https://github.com/kareesnc/SimpleTimeWidget/releases/download/1.0.0/SimpleTimeWidget-Sample.zip)  
+[Demo project ZIP](https://github.com/kareesnc/SimpleTimeWidget/releases/download/1.1.0/SimpleTimeWidget-Sample.zip)  
 
 ## Issues, suggestions and feature requests
 https://github.com/kareesnc/SimpleTimeWidget  
