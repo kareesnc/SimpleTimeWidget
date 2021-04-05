@@ -1,18 +1,10 @@
 /**
  * This file was generated from SimpleTimeWidget.xml
  * WARNING: All changes made to this file will be overwritten
- * @author Mendix Widgets Team
+ * @author Mendix UI Content Team
  */
 import { CSSProperties } from "react";
-import { ActionPreview } from "@mendix/pluggable-widgets-typing-generator/dist/typings";
 import { ActionValue, DynamicValue, EditableValue } from "mendix";
-
-interface CommonProps {
-    name: string;
-    class: string;
-    style?: CSSProperties;
-    tabIndex: number;
-}
 
 export type ReadStyleEnum = "control" | "text";
 
@@ -22,7 +14,12 @@ export type HoursModeEnum = "x12hr" | "x24hr";
 
 export type RequiredEnum = "yes" | "no";
 
-export interface SimpleTimeWidgetContainerProps extends CommonProps {
+export interface SimpleTimeWidgetContainerProps {
+    name: string;
+    class: string;
+    style?: CSSProperties;
+    tabIndex?: number;
+    id: string;
     timeAttribute: EditableValue<Date>;
     readStyle: ReadStyleEnum;
     inputStyle: InputStyleEnum;
@@ -33,24 +30,15 @@ export interface SimpleTimeWidgetContainerProps extends CommonProps {
     onChangeAction?: ActionValue;
 }
 
-export interface SimpleTimeWidgetPreviewProps extends CommonProps {
+export interface SimpleTimeWidgetPreviewProps {
+    class: string;
+    style: string;
     timeAttribute: string;
     readStyle: ReadStyleEnum;
     inputStyle: InputStyleEnum;
     hoursMode: HoursModeEnum;
     invalidMessage: string;
     required: RequiredEnum;
-    requiredMessage?: string;
-    onChangeAction?: ActionPreview;
-}
-
-export interface VisibilityMap {
-    timeAttribute: boolean;
-    readStyle: boolean;
-    inputStyle: boolean;
-    hoursMode: boolean;
-    invalidMessage: boolean;
-    required: boolean;
-    requiredMessage: boolean;
-    onChangeAction: boolean;
+    requiredMessage: string;
+    onChangeAction: {} | null;
 }

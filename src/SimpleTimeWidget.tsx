@@ -1,12 +1,13 @@
 import { Component, ReactNode, Fragment, createElement } from "react";
+
 import { TimeInput } from "./components/TimeInput";
 import { Alert } from "./components/Alert";
-import { hot } from "react-hot-loader/root";
+
 import { SimpleTimeWidgetContainerProps } from "../typings/SimpleTimeWidgetProps";
 
 import "./ui/SimpleTimeWidget.css";
 
-class SimpleTimeWidget extends Component<SimpleTimeWidgetContainerProps> {
+export default class SimpleTimeWidget extends Component<SimpleTimeWidgetContainerProps> {
     private readonly onUpdateHandle = this.onUpdate.bind(this);
     componentDidMount() {
         this.props.timeAttribute.setValidator(this.validator.bind(this));
@@ -67,5 +68,3 @@ class SimpleTimeWidget extends Component<SimpleTimeWidgetContainerProps> {
         return;
     }
 }
-
-export default hot(SimpleTimeWidget);

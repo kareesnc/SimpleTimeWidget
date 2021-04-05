@@ -45,21 +45,21 @@ export class TimeInput extends Component<InputProps> {
     componentDidUpdate(prevProps: InputProps) {
         if (this.props.value !== prevProps.value) {
             if(this.props.value != undefined){
-                const momentValue = Moment(this.props.value);
+                const timeValue = Moment(this.props.value);
                 if(this.props.render24hr) {
                     this.setState({ 
-                        hourValue: momentValue.format("H"), 
-                        minuteValue: momentValue.format("mm"), 
+                        hourValue: timeValue.format("H"), 
+                        minuteValue: timeValue.format("mm"), 
                         ampmValue: undefined,
-                        lastKnownDate: momentValue.format("YYYY-MM-DD")
+                        lastKnownDate: timeValue.format("YYYY-MM-DD")
                     });
                 }
                 else {
                     this.setState({ 
-                        hourValue: momentValue.format("h"), 
-                        minuteValue: momentValue.format("mm"), 
-                        ampmValue: momentValue.format("A"),
-                        lastKnownDate: momentValue.format("YYYY-MM-DD")
+                        hourValue: timeValue.format("h"), 
+                        minuteValue: timeValue.format("mm"), 
+                        ampmValue: timeValue.format("A"),
+                        lastKnownDate: timeValue.format("YYYY-MM-DD")
                     });
                 }
             }
