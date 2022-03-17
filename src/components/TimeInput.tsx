@@ -137,10 +137,17 @@ export class TimeInput extends Component<InputProps> {
                     placeholder={isHours ? "HH" : "MM"} />;
     }
     private renderNumberInput(isHours: boolean): ReactNode {
+        var maxNumber = 59;
+        if(isHours) {
+            maxNumber = 12;
+            if(this.props.render24hr) {
+                maxNumber = 23;
+            }
+        }
         return <input type="number" 
                     className={classNames("form-control","time-input-item","number-input")} 
                     min={isHours ? 1 : 0} 
-                    max={isHours ? 12 : 59} 
+                    max={maxNumber} 
                     onChange={isHours ? this.handleHourChange : this.handleMinuteChange}
                     onBlur={this.handleBlur}
                     disabled={this.props.disabled}
